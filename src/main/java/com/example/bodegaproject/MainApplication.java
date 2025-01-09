@@ -13,6 +13,8 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         System.setProperty("prism.graphics", "fast");
+        System.out.println("Directorio de trabajo: " + System.getProperty("user.dir"));
+
         Image icon = new Image("/shop.png");
         primaryStage.getIcons().add(icon);
 

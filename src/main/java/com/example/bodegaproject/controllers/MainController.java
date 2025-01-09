@@ -1,5 +1,6 @@
 package com.example.bodegaproject.controllers;
 
+import com.example.bodegaproject.database.SQLiteConnection;
 import com.example.bodegaproject.models.Product;
 import com.example.bodegaproject.service.ProductService;
 import com.example.bodegaproject.utils.AlertHelper;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -34,10 +36,20 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        createProductsTable();
-        configureTableView();
-        loadProductData();
-        configureSearchField();
+        // Primero, asegurarse de que el directorio y base de datos estén listos
+        try {
+            SQLiteConnection.getConnection();// Esto creará la carpeta 'database' si no existe
+            System.out.println("Conexión establecida correctamente.");
+
+            // Aquí puedes agregar cualquier otra inicialización que necesites para la aplicación
+            // Aquí podrías seguir con el resto de la inicialización de tu interfaz de usuario o lógica adicional.
+            createProductsTable();
+            configureTableView();
+            loadProductData();
+            configureSearchField();
+        } catch (SQLException e) {
+            System.out.println("Error al establecer la conexión con la base de datos: " + e.getMessage());
+        }
     }
 
     private void configureTableView() {

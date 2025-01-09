@@ -21,7 +21,7 @@
     -fx-background-color: #f4f4f4;
     -fx-border-color: #D3D3D3;
     -fx-border-style: solid;
-    -fx-border-width: 1 1px 1 1;
+    -fx-border-width: 1 0px 1 1;
 }
 
 .table-view .column-header .label {
@@ -45,20 +45,12 @@
 /* Filas y celdas */
 .table-view .table-row-cell {
     -fx-pref-height: 40px;
+    -fx-background-color: #f4f4f4;
     -fx-border-color: #D3D3D3; /* Color de las líneas divisorias */
     -fx-border-width: 0 1px 1 1; /* Líneas solo a la derecha */
     -fx-border-style: solid;
     -fx-font-family: "Montserrat"; /* Fuente más destacada */
     -fx-font-size: 16px;
-}
-
-/* Colores alternos para filas */
-.table-view .table-row-cell:odd {
-    -fx-background-color: #F4F4F4;
-}
-
-.table-view .table-row-cell:even {
-    -fx-background-color: #FFFFFF;
 }
 
 /* Hover en las filas */
@@ -69,7 +61,7 @@
 
 /* Filas seleccionadas */
 .table-view .table-row-cell:selected {
-    -fx-background-color: rgba(0, 0, 0, 0.2); /* Fondo sombreado */
+    -fx-background-color: rgba(143, 147, 155, 0.23); /* Color #8f939b con 20% de opacidad */
     -fx-text-fill: #000000; /* Mantén el texto negro */
     -fx-font-weight: bold; /* Negrita para destacar */
     -fx-border-color: #D3D3D3; /* Líneas divisorias originales */
@@ -90,7 +82,7 @@
 /* Líneas divisorias de las celdas */
 .table-view .table-cell {
     -fx-border-color: #D3D3D3; /* Mantén el color de las líneas divisorias */
-    -fx-border-width: 0 1px 1 0; /* Líneas solo a la derecha */
+    -fx-border-width: 0 1px 0 0; /* Líneas solo a la derecha */
 }
 
 /* Líneas y texto al interactuar con los headers */
