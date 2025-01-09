@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="429.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bodegaproject.controllers.RegisterProductController">
+    <VBox alignment="CENTER" prefHeight="429.0" prefWidth="426.0" spacing="10" style="-fx-background-color: white;">
+      <ImageView fitHeight="70.0" fitWidth="80.0">
+         <image>
+            <Image url="@../images/products.png" />
+         </image>
+         <VBox.margin>
+            <Insets bottom="8.0" />
+         </VBox.margin>
+      </ImageView>
+      <Label text="REGISTRAR PRODUCTO">
+         <font>
+            <Font name="Montserrat Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </Label>
+        <HBox alignment="CENTER" VBox.vgrow="NEVER">
+            <Label alignment="CENTER" text="CODIGO:">
+                <font>
+                    <Font name="Montserrat Bold" size="14.0" />
+                </font>
+            <HBox.margin>
+               <Insets right="5.0" />
+            </HBox.margin>
+            </Label>
+            <Label fx:id="productCodeLabel" alignment="BOTTOM_RIGHT" style="-font-family: Montserrat; -fx-font-size: 16px; -fx-font-weight: bold;" text="productCode">
+                <font>
+                    <Font name="Montserrat Regular" size="14.0" />
+                </font>
+          </Label>
+        </HBox>
+        <TextField fx:id="productNameField" prefHeight="40.0" prefWidth="2.0" promptText="Nombre del Producto" stylesheets="@../styles/styles.css" VBox.vgrow="NEVER">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin></TextField>
+        <TextField fx:id="productPriceField" prefHeight="40.0" prefWidth="0.0" promptText="Precio del Producto" styleClass="text-field" stylesheets="@../styles/styles.css" VBox.vgrow="NEVER">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+         </VBox.margin></TextField>
+        <Button onAction="#handleRegister" prefHeight="40.0" prefWidth="100.0" stylesheets="@../styles/styles.css" text="Registrar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+        <Label fx:id="statusLabel" textFill="red" />
+        <opaqueInsets>
+        <Insets />
+        </opaqueInsets>
+    </VBox>
+</AnchorPane>
