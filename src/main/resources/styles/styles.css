@@ -1,0 +1,189 @@
+.anchor-pane {
+    -fx-background-color: #ffffff;
+}
+
+#vbox {
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* Estilo base de la TableView */
+.table-view {
+    -fx-border-color: transparent;
+    -fx-background-color: white;
+    -fx-table-cell-border-color: #D3D3D3;
+    -fx-control-inner-background: white;
+}
+
+/* Encabezados */
+.table-view .column-header {
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #D3D3D3;
+    -fx-border-style: solid;
+    -fx-border-width: 1 1px 1 1;
+}
+
+.table-view .column-header .label {
+    -fx-font-family: "Montserrat";
+    -fx-text-fill: #000000;
+    -fx-font-size: 17px;
+    -fx-padding: 10 0 10 1;
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .column-header:focused {
+    -fx-background-color: #f4f4f4; /* Mantén el fondo de los encabezados al hacer clic */
+    -fx-border-color: #D3D3D3;
+}
+
+/* Ajustar altura de los encabezados */
+.table-view .column-header {
+    -fx-pref-height: 40px;
+}
+
+/* Filas y celdas */
+.table-view .table-row-cell {
+    -fx-pref-height: 40px;
+    -fx-border-color: #D3D3D3; /* Color de las líneas divisorias */
+    -fx-border-width: 0 1px 1 1; /* Líneas solo a la derecha */
+    -fx-border-style: solid;
+    -fx-font-family: "Montserrat"; /* Fuente más destacada */
+    -fx-font-size: 16px;
+}
+
+/* Colores alternos para filas */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F4F4F4;
+}
+
+.table-view .table-row-cell:even {
+    -fx-background-color: #FFFFFF;
+}
+
+/* Hover en las filas */
+.table-row-cell:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.1); /* Color de fondo suave */
+    -fx-cursor: hand; /* Cambiar el cursor */
+}
+
+/* Filas seleccionadas */
+.table-view .table-row-cell:selected {
+    -fx-background-color: rgba(0, 0, 0, 0.2); /* Fondo sombreado */
+    -fx-text-fill: #000000; /* Mantén el texto negro */
+    -fx-font-weight: bold; /* Negrita para destacar */
+    -fx-border-color: #D3D3D3; /* Líneas divisorias originales */
+}
+
+/* Hover en filas seleccionadas */
+.table-row-cell:selected:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.3); /* Fondo más oscuro al pasar el mouse */
+    -fx-text-fill: #000000;
+}
+
+/* Desactiva cambios de foco que afectan las celdas */
+.table-view:focused .table-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: black; /* Mantén el texto negro */
+}
+
+/* Líneas divisorias de las celdas */
+.table-view .table-cell {
+    -fx-border-color: #D3D3D3; /* Mantén el color de las líneas divisorias */
+    -fx-border-width: 0 1px 1 0; /* Líneas solo a la derecha */
+}
+
+/* Líneas y texto al interactuar con los headers */
+.table-view .table-cell:selected:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.2); /* Mantén el fondo sombreado */
+    -fx-text-fill: black; /* Mantén el texto negro */
+    -fx-border-color: #D3D3D3; /* Mantén el color de las líneas */
+}
+
+/* Estilo base para los botones */
+.button {
+    -fx-font-family: "Montserrat Medium"; /* Fuente Montserrat Medium */
+    -fx-background-color: #F4F4F4; /* Color del fondo */
+    -fx-background-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #d9d9d9; /* Color del borde */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-text-fill: #000000; /* Color del texto */
+    -fx-padding: 8 0; /* Espaciado interno */
+    -fx-font-size: 13px; /* Tamaño de fuente */
+    -fx-cursor: hand; /* Cambiar el cursor al pasar por encima */
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0); /* Sin sombra inicial */
+    -fx-transition: all 0.3s ease; /* Transiciones suaves */
+}
+
+/* Efecto hover para los botones */
+.button:hover {
+    -fx-font-family: "Montserrat Bold"; /* Cambia a Montserrat Bold */
+    -fx-background-color: #E0E0E0; /* Fondo más oscuro */
+    -fx-border-color: #bdbdbd; /* Cambia el color del borde */
+    -fx-text-fill: #000000; /* Color del texto permanece */
+}
+
+/* Efecto para botón presionado */
+.button:pressed {
+    -fx-background-color: #D6D6D6; /* Fondo más oscuro aún */
+    -fx-border-color: #b0b0b0; /* Borde más oscuro */
+    -fx-font-family: "Montserrat Bold"; /* Fuente más destacada */
+}
+
+/* Estilo general para el HBox */
+.hbox-container {
+    -fx-background-color: white; /* Fondo claro */
+    -fx-background-radius: 30px; /* Redondear las esquinas */
+    -fx-border-color: #474952; /* Quitar bordes */
+    -fx-border-radius: 30px;
+    -fx-padding: 5px; /* Espaciado interno */
+    -fx-spacing: 10px; /* Espaciado entre los elementos dentro del HBox */
+    -fx-alignment: center; /* Centrar los elementos dentro del HBox */
+}
+
+/* Estilo para el TextField (haciendo que sea invisible) */
+.hbox-container .text-field {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-width: 0; /* Sin borde */
+    -fx-pref-width: 200px; /* Ajustar el tamaño según sea necesario */
+}
+
+/* Estilo solo para el TextField de nombre del producto */
+#productNameField {
+    -fx-background-color: #ffffff; /* Fondo blanco */
+    -fx-background-radius: 3px; /* Redondear las esquinas */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #f4f4f4; /* Color de borde suave */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+}
+
+/* Estilo cuando el TextField de nombre del producto tiene foco */
+#productNameField:focused {
+    -fx-border-color: #d1e2ea; /* Borde verde cuando está enfocado */
+    -fx-background-color: #ffffff; /* Fondo blanco claro cuando tiene foco */
+}
+
+/* Estilo solo para el TextField de precio del producto */
+#productPriceField {
+    -fx-background-color: #ffffff; /* Fondo blanco */
+    -fx-background-radius: 3px; /* Redondear las esquinas */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #f4f4f4; /* Color de borde suave */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+}
+
+/* Estilo cuando el TextField de precio del producto tiene foco */
+#productPriceField:focused {
+    -fx-border-color: #d1e2ea; /* Borde naranja cuando está enfocado */
+    -fx-background-color: #ffffff; /* Fondo gris claro cuando tiene foco */
+}
