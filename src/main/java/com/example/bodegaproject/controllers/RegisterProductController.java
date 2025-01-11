@@ -105,7 +105,7 @@ public class RegisterProductController {
             clearFields();
 
             // Mostrar mensaje de éxito
-            statusLabel.setText("PRODUCTO REGISTRADO CORRECTAMENTE.");
+            statusLabel.setText("✅ PRODUCTO REGISTRADO CORRECTAMENTE.");
 
             // Cerrar la ventana
             productCodeLabel.getScene().getWindow().hide();

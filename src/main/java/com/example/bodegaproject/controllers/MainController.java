@@ -38,12 +38,17 @@ public class MainController {
     public void initialize() {
         // Primero, asegurarse de que el directorio y base de datos estén listos
         try {
-            SQLiteConnection.getConnection();// Esto creará la carpeta 'database' si no existe
-            System.out.println("Conexión establecida correctamente.");
+            // Asegurarse de que el directorio de la base de datos esté listo
+            SQLiteConnection.initializeDatabaseDirectory();
 
-            // Aquí puedes agregar cualquier otra inicialización que necesites para la aplicación
-            // Aquí podrías seguir con el resto de la inicialización de tu interfaz de usuario o lógica adicional.
+            // Establecer conexión
+            SQLiteConnection.getConnection();
+            System.out.println("✅ Conexión establecida correctamente.");
+
+            // Crear tabla si no existe
             createProductsTable();
+
+            // Configurar la tabla y cargar datos
             configureTableView();
             loadProductData();
             configureSearchField();

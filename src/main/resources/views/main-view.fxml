@@ -80,7 +80,7 @@
                <Insets />
             </VBox.margin>
          </Button>
-         <Label text="V1.0.0SE" textFill="#8f939b">
+         <Label text="V1.1.0SE" textFill="#8f939b">
             <font>
                <Font name="Montserrat Bold" size="13.0" />
             </font>

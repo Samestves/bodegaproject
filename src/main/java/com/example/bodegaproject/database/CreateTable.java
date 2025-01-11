@@ -20,7 +20,7 @@ public class CreateTable {
         try (Connection conn = SQLiteConnection.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.execute(sql);
-            System.out.println("Tabla 'products' creada o ya existe.");
+            System.out.println("✅ Tabla 'products' creada o ya existe.");
         } catch (Exception e) {
             System.out.println("Error al crear la tabla: " + e.getMessage());
         }
