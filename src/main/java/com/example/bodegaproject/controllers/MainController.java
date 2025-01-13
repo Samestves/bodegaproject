@@ -6,12 +6,14 @@ import com.example.bodegaproject.service.ProductService;
 import com.example.bodegaproject.utils.AlertHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -64,8 +66,39 @@ public class MainController {
 
         // Configurar el placeholder
         Label placeholder = new Label("No hay productos disponibles");
-        placeholder.setStyle("-fx-font-family: 'Montserrat'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: gray;");
         tableView.setPlaceholder(placeholder);
+
+        // Configurar eventos de la TableView para desactivar el foco y mantener la selección
+        configureTableViewFocus(tableView);
+    }
+
+    private void configureTableViewFocus(TableView<?> tableView) {
+        // Evento para clics en la tabla (mousePressed y mouseClicked)
+        EventHandler<MouseEvent> focusHandler = event -> {
+            if (tableView.isFocused()) {
+                removeFocusFromTable(tableView);
+            }
+            maintainCellSelection(tableView);
+            event.consume();
+        };
+
+        tableView.setOnMousePressed(focusHandler);
+        tableView.setOnMouseClicked(focusHandler);
+    }
+
+    // Método para desactivar el foco en la TableView
+    private void removeFocusFromTable(TableView<?> tableView) {
+        if (tableView.getParent() != null) {
+            tableView.getParent().requestFocus(); // Quitar el foco de la tabla
+        }
+    }
+
+    // Método para mantener la selección de la celda sin alterar el foco
+    private void maintainCellSelection(TableView<?> tableView) {
+        int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            tableView.getSelectionModel().select(selectedIndex);
+        }
     }
 
     /**

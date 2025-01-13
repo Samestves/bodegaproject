@@ -1,95 +1,95 @@
-.anchor-pane {
-    -fx-background-color: #ffffff;
-}
-
-#vbox {
+.vbox {
+    -fx-background-color: white;
     -fx-background-size: cover;
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
 
-/* Estilo base de la TableView */
+/* Tabla general */
 .table-view {
-    -fx-border-color: transparent;
-    -fx-background-color: white;
-    -fx-table-cell-border-color: #D3D3D3;
-    -fx-control-inner-background: white;
+    -fx-border-width: 1px; /* Grosor uniforme para toda la tabla */
+    -fx-border-color: #D9D9D9; /* Color del borde de la tabla */
+    -fx-background-color: #f4f4f4; /* Fondo general de la tabla */
+    -fx-padding: 0; /* Elimina cualquier relleno adicional */
+    -fx-table-cell-border-color: #D9D9D9; /* Borde entre celdas */
+    -fx-control-inner-background: #f4f4f4; /* Fondo interno uniforme */
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
+}
+
+/* Placeholder */
+.table-view .placeholder {
+    -fx-font-family: "Montserrat";
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: gray;
 }
 
 /* Encabezados */
 .table-view .column-header {
-    -fx-background-color: #f4f4f4;
-    -fx-border-color: #D3D3D3;
-    -fx-border-style: solid;
-    -fx-border-width: 1 0px 1 1;
+    -fx-border-width: 0 1 1px 0; /* Borde inferior de 1px */
+    -fx-border-color: #D9D9D9; /* Color del borde inferior */
+    -fx-background-color: #f4f4f4; /* Fondo del encabezado */
+    -fx-pref-height: 40px; /* Altura preferida del encabezado */
 }
 
 .table-view .column-header .label {
     -fx-font-family: "Montserrat";
-    -fx-text-fill: #000000;
+    -fx-text-fill: #000000; /* Color del texto */
     -fx-font-size: 17px;
-    -fx-padding: 10 0 10 1;
-    -fx-alignment: CENTER-LEFT;
+    -fx-padding: 10 0 10 1; /* Relleno interno */
+    -fx-alignment: CENTER-LEFT; /* Alineación del texto */
 }
 
-.table-view .column-header:focused {
-    -fx-background-color: #f4f4f4; /* Mantén el fondo de los encabezados al hacer clic */
-    -fx-border-color: #D3D3D3;
-}
-
-/* Ajustar altura de los encabezados */
-.table-view .column-header {
-    -fx-pref-height: 40px;
-}
-
-/* Filas y celdas */
+/* Filas */
 .table-view .table-row-cell {
-    -fx-pref-height: 40px;
-    -fx-background-color: #f4f4f4;
-    -fx-border-color: #D3D3D3; /* Color de las líneas divisorias */
-    -fx-border-width: 0 1px 1 1; /* Líneas solo a la derecha */
-    -fx-border-style: solid;
-    -fx-font-family: "Montserrat"; /* Fuente más destacada */
-    -fx-font-size: 16px;
+    -fx-border-width: 0 0px 1px 0; /* Borde derecho e inferior de 1px */
+    -fx-pref-height: 45px; /* Altura preferida de las filas */
+    -fx-background-color: #f4f4f4; /* Fondo de las filas */
+    -fx-border-color: #D9D9D9; /* Color del borde */
+    -fx-border-style: solid; /* Estilo del borde */
+    -fx-font-family: "Montserrat Bold";
+    -fx-font-size: 16px; /* Tamaño del texto */
+    -fx-text-fill: #8f939b; /* Color del texto */
+    -fx-transition: background-color 0.3s ease; /* Transición suave */
 }
 
-/* Hover en las filas */
-.table-row-cell:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.1); /* Color de fondo suave */
-    -fx-cursor: hand; /* Cambiar el cursor */
+/* Celdas */
+.table-view .table-cell {
+    -fx-border-width: 0 1px 0px 0; /* Borde derecho e inferior */
+    -fx-border-color: #D9D9D9; /* Color del borde */
+    -fx-padding: 5; /* Relleno interno de las celdas */
+    -fx-alignment: CENTER-LEFT; /* Alineación del contenido */
 }
 
-/* Filas seleccionadas */
+/* Fondo suave al seleccionar */
 .table-view .table-row-cell:selected {
-    -fx-background-color: rgba(143, 147, 155, 0.23); /* Color #8f939b con 20% de opacidad */
-    -fx-text-fill: #000000; /* Mantén el texto negro */
-    -fx-font-weight: bold; /* Negrita para destacar */
-    -fx-border-color: #D3D3D3; /* Líneas divisorias originales */
-}
-
-/* Hover en filas seleccionadas */
-.table-row-cell:selected:hover {
-    -fx-background-color: rgba(0, 0, 0, 0.3); /* Fondo más oscuro al pasar el mouse */
+    -fx-background-color: rgba(200, 200, 200, 0.25);
     -fx-text-fill: #000000;
 }
 
-/* Desactiva cambios de foco que afectan las celdas */
-.table-view:focused .table-cell {
+/* Estilo cuando una fila tiene datos (no vacía) */
+.table-view .table-row-cell:hover {
+    -fx-background-color: rgba(200, 200, 200, 0.15); /* Fondo oscuro en hover */
+    -fx-cursor: hand; /* El cursor cambia a "hand" cuando hay datos */
+}
+
+/* Asegurarse de que las celdas vacías no tengan hover ni cursor */
+.table-view .table-row-cell:empty:hover {
+    -fx-background-color: transparent; /* Sin fondo al hacer hover en celdas vacías */
+    -fx-cursor: default; /* Cursor por defecto */
+}
+
+/* Asegurar que el fondo seleccionado no cambie al hacer hover en elementos seleccionados */
+.table-view .table-row-cell:selected:hover {
+    -fx-background-color: rgba(200, 200, 200, 0.25); /* Fondo suave al estar seleccionada */
+}
+
+/* Elimina el focus momentaneo que causa el parpadeo */
+.table-row-cell:focused {
     -fx-background-color: transparent;
-    -fx-text-fill: black; /* Mantén el texto negro */
-}
-
-/* Líneas divisorias de las celdas */
-.table-view .table-cell {
-    -fx-border-color: #D3D3D3; /* Mantén el color de las líneas divisorias */
-    -fx-border-width: 0 1px 0 0; /* Líneas solo a la derecha */
-}
-
-/* Líneas y texto al interactuar con los headers */
-.table-view .table-cell:selected:focused {
-    -fx-background-color: rgba(0, 0, 0, 0.2); /* Mantén el fondo sombreado */
-    -fx-text-fill: black; /* Mantén el texto negro */
-    -fx-border-color: #D3D3D3; /* Mantén el color de las líneas */
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
 /* Estilo base para los botones */

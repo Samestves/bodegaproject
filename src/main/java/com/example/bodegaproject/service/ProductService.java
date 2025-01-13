@@ -98,19 +98,20 @@ public class ProductService {
         return false;
     }
 
-
-    public static boolean isCodeExists(String code) {
-        String query = "SELECT COUNT(*) FROM products WHERE codigo = ?";
+    public static String getLastProductCode(String prefix) {
+        String query = "SELECT codigo FROM products WHERE codigo LIKE ? ORDER BY codigo DESC LIMIT 1";
         try (Connection conn = SQLiteConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, code);
+
+            stmt.setString(1, prefix + "%");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0; // Si COUNT(*) > 0, el código ya existe
+                return rs.getString("codigo");
             }
+
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error verificando existencia del código", e);
+            Logger.getLogger(ProductService.class.getName()).log(Level.SEVERE, "Error al obtener el último código", e);
         }
-        return false;
+        return null;
     }
 }
