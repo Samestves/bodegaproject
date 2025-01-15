@@ -11,22 +11,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Optional;
 
 import static com.example.bodegaproject.database.CreateTable.createProductsTable;
+import static com.example.bodegaproject.utils.IconUtils.createIcon;
 
-/**
- * Controlador para la pantalla principal de la aplicación.
- * Gestiona la navegación, la búsqueda de productos y la visualización en la tabla.
- */
 public class MainController {
 
     @FXML private TableView<Product> tableView;
@@ -34,23 +28,12 @@ public class MainController {
     @FXML private TableColumn<Product, String> productoColumn;
     @FXML private TableColumn<Product, Integer> precioColumn;
     @FXML private TextField searchTextField;
-    private ObservableList<Product> masterProductList; // Lista principal de productos
+    private ObservableList<Product> masterProductList;
 
     @FXML
     public void initialize() {
-        // Primero, asegurarse de que el directorio y base de datos estén listos
         try {
-            // Asegurarse de que el directorio de la base de datos esté listo
-            SQLiteConnection.initializeDatabaseDirectory();
-
-            // Establecer conexión
-            SQLiteConnection.getConnection();
-            System.out.println("✅ Conexión establecida correctamente.");
-
-            // Crear tabla si no existe
-            createProductsTable();
-
-            // Configurar la tabla y cargar datos
+            initializeDatabase();
             configureTableView();
             loadProductData();
             configureSearchField();
@@ -59,21 +42,22 @@ public class MainController {
         }
     }
 
+    private void initializeDatabase() throws SQLException {
+        SQLiteConnection.initializeDatabaseDirectory();
+        SQLiteConnection.getConnection();
+        System.out.println("✅ Conexión establecida correctamente.");
+        createProductsTable();
+    }
+
     private void configureTableView() {
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty());
         productoColumn.setCellValueFactory(cellData -> cellData.getValue().productoProperty());
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
-
-        // Configurar el placeholder
-        Label placeholder = new Label("No hay productos disponibles");
-        tableView.setPlaceholder(placeholder);
-
-        // Configurar eventos de la TableView para desactivar el foco y mantener la selección
+        tableView.setPlaceholder(new Label("No hay productos disponibles"));
         configureTableViewFocus(tableView);
     }
 
     private void configureTableViewFocus(TableView<?> tableView) {
-        // Evento para clics en la tabla (mousePressed y mouseClicked)
         EventHandler<MouseEvent> focusHandler = event -> {
             if (tableView.isFocused()) {
                 removeFocusFromTable(tableView);
@@ -86,14 +70,12 @@ public class MainController {
         tableView.setOnMouseClicked(focusHandler);
     }
 
-    // Método para desactivar el foco en la TableView
     private void removeFocusFromTable(TableView<?> tableView) {
         if (tableView.getParent() != null) {
-            tableView.getParent().requestFocus(); // Quitar el foco de la tabla
+            tableView.getParent().requestFocus();
         }
     }
 
-    // Método para mantener la selección de la celda sin alterar el foco
     private void maintainCellSelection(TableView<?> tableView) {
         int selectedIndex = tableView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -101,11 +83,8 @@ public class MainController {
         }
     }
 
-    /**
-     * Configura el campo de texto para realizar búsquedas en tiempo real.
-     */
     private void configureSearchField() {
-        searchTextField.textProperty().addListener((observable, oldvalue, newValue) -> {
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && !newValue.trim().isEmpty()) {
                 filterProducts(newValue);
             } else {
@@ -114,9 +93,6 @@ public class MainController {
         });
     }
 
-    /**
-     * Filtra los productos según el texto ingresado en el campo de búsqueda.
-     */
     private void filterProducts(String searchText) {
         ObservableList<Product> filteredList = FXCollections.observableArrayList();
 
@@ -130,16 +106,10 @@ public class MainController {
         tableView.setItems(filteredList);
     }
 
-    /**
-     * Restablece la tabla a la lista completa de productos.
-     */
     private void resetTableView() {
         tableView.setItems(masterProductList);
     }
 
-    /**
-     * Carga los datos de productos desde la base de datos y actualiza la lista principal.
-     */
     private void loadProductData() {
         masterProductList = FXCollections.observableArrayList(ProductService.loadProducts());
         resetTableView();
@@ -151,18 +121,13 @@ public class MainController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/register-product-view.fxml"));
             Stage stage = new Stage();
 
-            // Establecer el redimensionamiento
             stage.setResizable(false);
-
-            // Establecer un icono vacío
-            Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/edit.png")).toExternalForm());
-            stage.getIcons().add(icon);
+            stage.getIcons().add(createIcon("/images/edit.png").getImage());
 
             stage.setTitle("Registrar Producto");
             stage.setScene(new Scene(loader.load()));
             stage.show();
 
-            // Escuchar el cierre de la ventana para actualizar la tabla
             stage.setOnHiding(event -> loadProductData());
         } catch (IOException e) {
             AlertHelper.showErrorAlert("Error al abrir la ventana de registro", e.getMessage());
@@ -179,24 +144,19 @@ public class MainController {
             dialog.setHeaderText("Actualizar precio del producto");
             dialog.setContentText("Ingrese el nuevo precio:");
 
-            // Cambiar el icono de la barra de título del TextInputDialog
-            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();  // Obtiene el Stage
-            Image titleIcon = new Image(Objects.requireNonNull(getClass().getResource("/images/updatePrice.png")).toExternalForm());  // Cargar el icono
-            stage.getIcons().add(titleIcon);  // Establecer el icono en la barra de título
+            // Cambiar el icono de la barra de título
+            Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(createIcon("/images/updatePrice.png").getImage());
 
             // Establecer un icono personalizado en el TextInputDialog
-            Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/edit.png")).toExternalForm());
-            ImageView iconView = new ImageView(icon);
-            iconView.setFitWidth(40);  // Ajusta el tamaño del icono
-            iconView.setFitHeight(40);
-            dialog.getDialogPane().setGraphic(iconView);  // Asignar el gráfico al dialog
+            dialog.getDialogPane().setGraphic(createIcon("/images/edit.png"));
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(newPrice -> {
                 try {
                     int updatedPrice = Integer.parseInt(newPrice);
                     ProductService.updateProductPrice(selectedProduct, updatedPrice);
-                    loadProductData(); // Actualiza la tabla después de modificar
+                    loadProductData();
                     AlertHelper.showInfoAlert("Actualización exitosa", "El precio se actualizó correctamente.");
                 } catch (NumberFormatException e) {
                     AlertHelper.showErrorAlert("Entrada inválida", "El precio debe ser un número válido.");
@@ -212,7 +172,7 @@ public class MainController {
         Product selectedProduct = tableView.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
             ProductService.deleteProduct(selectedProduct);
-            loadProductData(); // Actualiza la tabla después de eliminar
+            loadProductData();
         } else {
             AlertHelper.showErrorAlert("Selección requerida", "Por favor selecciona un producto para eliminar.");
         }
