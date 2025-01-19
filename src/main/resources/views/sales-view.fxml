@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1">
+   <Label alignment="CENTER" layoutX="111.0" layoutY="157.0" prefHeight="86.0" prefWidth="421.0"
+          text=" VISTA DE VENTAS:  FUNCIONANDO ">
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Label>
+</AnchorPane>

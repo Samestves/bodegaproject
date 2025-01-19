@@ -19,11 +19,12 @@ public class MainApplication extends Application {
         primaryStage.getIcons().add(icon);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 980, 660);
+        Scene scene = new Scene(fxmlLoader.load(), 972, 660);
 
         // Deshabilitar el redimensionamiento
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
 
+        primaryStage.setMaximized(true); // Maximiza la ventana
         primaryStage.setTitle("Bodega Project");
         primaryStage.setScene(scene);
         primaryStage.show();
