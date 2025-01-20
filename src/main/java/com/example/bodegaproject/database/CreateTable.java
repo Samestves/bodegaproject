@@ -13,7 +13,9 @@ public class CreateTable {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 codigo TEXT NOT NULL UNIQUE,
                 producto TEXT NOT NULL,
-                precio REAL NOT NULL
+                precio REAL NOT NULL,
+                cantidad INTEGER NOT NULL,
+                peso_volumen TEXT NOT NULL
             );
         """;
 

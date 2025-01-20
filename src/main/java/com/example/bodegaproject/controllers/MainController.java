@@ -3,8 +3,9 @@ package com.example.bodegaproject.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Tooltip;
 
 import java.io.IOException;
 
@@ -14,11 +15,30 @@ public class MainController {
     private StackPane contentPane;
 
     @FXML
-    private BorderPane viewContainer;
+    private Button inventoryButton;
+
+    @FXML
+    private Button salesButton;
+
+    @FXML
+    private Button creditsButton;
 
     @FXML
     public void initialize() {
+        // Configurar Tooltips para los botones con el estilo deseado
+        setupTooltip(inventoryButton, "Inventario");
+        setupTooltip(salesButton, "Ventas");
+        setupTooltip(creditsButton, "Créditos");
+    }
 
+    private void setupTooltip(Button button, String tooltipText) {
+        // Crear el Tooltip con fondo #f4f4f4 y texto en negro
+        Tooltip tooltip = new Tooltip(tooltipText);
+        tooltip.setStyle("-fx-background-color: #f4f4f4; -fx-text-fill: black; -fx-font-size: 11px; -fx-font-family: Montserrat Bold;");
+
+        // Establecer el tiempo de aparición del Tooltip
+        Tooltip.install(button, tooltip);
+        tooltip.setShowDelay(javafx.util.Duration.millis(400)); // Tiempo de 0.3 segundos
     }
 
     @FXML
@@ -40,7 +60,6 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
-
 
             // Configurar la vista cargada
             root.setOpacity(1.0);

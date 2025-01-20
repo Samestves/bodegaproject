@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,10 +17,34 @@
     </center>
     <bottom>
         <!-- Botones fijos en la parte inferior -->
-        <HBox alignment="CENTER" prefHeight="50" spacing="10" style="-fx-background-color: gray; -fx-padding: 10;">
-            <Button fx:id="inventoryButton" focusTraversable="false" onAction="#switchToInventory" prefHeight="35.0" prefWidth="35.0" stylesheets="@../styles/styles.css" text="📦" />
-            <Button fx:id="salesButton" focusTraversable="false" onAction="#switchToSales" prefHeight="35.0" prefWidth="35.0" stylesheets="@../styles/styles.css" text="🛒" />
-            <Button fx:id="creditsButton" focusTraversable="false" onAction="#switchToCredits" prefHeight="35.0" prefWidth="35.0" stylesheets="@../styles/styles.css" text="👥" />
+        <HBox alignment="CENTER" prefHeight="50" spacing="10" style="-fx-background-color: #212529; -fx-padding: 10;">
+            <Button fx:id="inventoryButton" alignment="CENTER" focusTraversable="false" onAction="#switchToInventory" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+            <graphic>
+               <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/inventory-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic></Button>
+            <Button fx:id="salesButton" focusTraversable="false" onAction="#switchToSales" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
+            <graphic>
+               <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/cart-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic></Button>
+            <Button fx:id="creditsButton" focusTraversable="false" onAction="#switchToCredits" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
+            <graphic>
+               <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/client-icon.png" />
+                  </image>
+               </ImageView>
+            </graphic></Button>
         </HBox>
     </bottom>
 </BorderPane>

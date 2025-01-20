@@ -154,6 +154,34 @@
     -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
 }
 
+/* Estilo solo para el TextField del Peso */
+#pesoField {
+    -fx-background-color: #ffffff; /* Fondo blanco */
+    -fx-background-radius: 3px; /* Redondear las esquinas */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #f4f4f4; /* Color de borde suave */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+}
+
+/* Estilo solo para el TextField de Cantidad */
+#itemCantidad {
+    -fx-background-color: #ffffff; /* Fondo blanco */
+    -fx-background-radius: 3px; /* Redondear las esquinas */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #f4f4f4; /* Color de borde suave */
+    -fx-border-width: 2px; /* Ancho del borde */
+    -fx-padding: 10px; /* Espaciado interno */
+    -fx-font-size: 16px; /* Tamaño de fuente */
+    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
+    -fx-text-fill: #333333; /* Color del texto */
+    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+}
+
 /* Estilo cuando el TextField de nombre del producto tiene foco */
 #productNameField:focused {
     -fx-border-color: #d1e2ea; /* Borde verde cuando está enfocado */

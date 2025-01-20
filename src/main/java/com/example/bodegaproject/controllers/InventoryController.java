@@ -23,10 +23,14 @@ import static com.example.bodegaproject.utils.IconUtils.createIcon;
 
 public class InventoryController {
 
+
+
     @FXML private TableView<Product> tableView;
     @FXML private TableColumn<Product, String> codigoColumn;
     @FXML private TableColumn<Product, String> productoColumn;
     @FXML private TableColumn<Product, Integer> precioColumn;
+    @FXML private TableColumn<Product, String> pesoColumn;
+    @FXML private TableColumn<Product, Integer> cantidadColumn;
     @FXML private TextField searchTextField;
     private ObservableList<Product> masterProductList;
 
@@ -53,6 +57,8 @@ public class InventoryController {
         codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty());
         productoColumn.setCellValueFactory(cellData -> cellData.getValue().productoProperty());
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
+        pesoColumn.setCellValueFactory(cellData -> cellData.getValue().pesoProperty());
+        cantidadColumn.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty().asObject());
         tableView.setPlaceholder(new Label("No hay productos disponibles"));
         configureTableViewFocus(tableView);
     }
