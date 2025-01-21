@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Tooltip;
 
@@ -11,8 +13,15 @@ import java.io.IOException;
 
 public class MainController {
 
+    public BorderPane viewContainer;
+
+    public HBox buttonBar;
+
     @FXML
     private StackPane contentPane;
+
+    @FXML
+    private Button homeButton;
 
     @FXML
     private Button inventoryButton;
@@ -42,6 +51,27 @@ public class MainController {
     }
 
     @FXML
+    private void switchToMain() {
+        // Elimina la barra de botones (si ya está añadida)
+        HBox buttonBar = (HBox) viewContainer.lookup("#buttonBar");
+        if (buttonBar != null) {
+            viewContainer.getChildren().remove(buttonBar);
+        }
+
+        // Cargar la vista principal (sin los botones)
+        loadView("/views/main-view.fxml");
+
+        // Restaurar la barra de botones
+        viewContainer.setBottom(buttonBar);
+
+        // Cambiar el color de fondo del StackPane al original
+        String currentBackground = contentPane.getStyle();
+        if (!"-fx-background-color: white;".equals(currentBackground)) {
+            contentPane.setStyle("-fx-background-color: #212529;");
+        }
+    }
+
+    @FXML
     private void switchToInventory() {
         loadView("/views/inventory-view.fxml");
     }
@@ -66,6 +96,12 @@ public class MainController {
             root.setDisable(false);
             root.setPickOnBounds(false); // Permitir interacción incluso con áreas invisibles
             root.requestFocus(); // Dar el foco a la vista cargada
+
+            // Cambiar el color de fondo del StackPane solo si es diferente
+            String currentBackground = contentPane.getStyle();
+            if (!"-fx-background-color: white;".equals(currentBackground)) {
+                contentPane.setStyle("-fx-background-color: white;");
+            }
 
             // Remover la vista anterior del StackPane
             if (!contentPane.getChildren().isEmpty()) {

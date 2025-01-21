@@ -85,8 +85,15 @@ public class SalesController {
                 double totalProducto = cantidadSeleccionada * selectedProduct.getPrecio();
                 totalVenta += totalProducto;
 
-                // Agrega el producto al ListView con el formato deseado
-                String formattedProduct = cantidadSeleccionada + "x " + selectedProduct.getProducto() + " - " + totalProducto + " BS";
+                // Formatear la cantidad y nombre a la izquierda
+                String cantidadStr = String.format("%-5d", cantidadSeleccionada);  // 5 caracteres para la cantidad
+                String productoStr = String.format("%-20s", selectedProduct.getProducto());  // 20 caracteres para el nombre
+
+                // Formatear el monto a la derecha
+                String totalStr = String.format("%10.2f", totalProducto);  // 10 caracteres para el total con dos decimales
+
+                // Concatenamos el formato deseado
+                String formattedProduct = cantidadStr + productoStr + totalStr + " BS";
                 listItems.getItems().add(formattedProduct);
 
                 // Actualiza el total en la UI
@@ -133,6 +140,8 @@ public class SalesController {
             alert.setHeaderText("No se pudo realizar la venta");
             alert.setContentText(e.getMessage());  // Muestra el mensaje de error
             listItems.getItems().clear();
+            totalVenta = 0.0;
+            totalLabel.setText("0.0 BS");
             alert.showAndWait();
         }
     }

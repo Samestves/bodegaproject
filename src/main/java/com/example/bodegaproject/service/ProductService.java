@@ -132,12 +132,16 @@ public class ProductService {
             try (PreparedStatement selectStmt = conn.prepareStatement(querySelect)) {
 
                 for (String productoStr : productosVendidos) {
-                    // Suponiendo que el formato de productoStr es "cantidad - producto"
-                    String[] parts = productoStr.split("x| - ");
-                    int cantidadVendida = Integer.parseInt(parts[0].trim());  // Extraemos la cantidad
-                    String producto = parts[1].trim();  // Extraemos el nombre del producto
+                    // Suponiendo que el formato de productoStr es "cantidadSeleccionada producto --------------- totalProducto BS"
+                    String[] parts = productoStr.split(" - "); // Separar en base al delimitador " --------------- "
 
-                    // Verificamos si hay suficiente cantidad en el inventario
+                    // Extraemos la cantidad y el nombre del producto
+                    String cantidadStr = parts[0].trim().split(" ")[0];  // Extraemos la cantidad (antes del nombre)
+                    String producto = parts[0].trim().substring(cantidadStr.length()).trim();  // El nombre del producto
+
+                    int cantidadVendida = Integer.parseInt(cantidadStr);  // Convertir cantidad a entero
+
+                    // Verificamos si hay suficiente cantidad en inventario
                     selectStmt.setString(1, producto);
                     try (ResultSet rs = selectStmt.executeQuery()) {
                         if (rs.next()) {

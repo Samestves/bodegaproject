@@ -1,15 +1,9 @@
-.vbox {
-    -fx-background-color: white;
-    -fx-background-size: cover;
-    -fx-background-position: center center;
-    -fx-background-repeat: no-repeat;
-}
-
 /* Tabla general */
 /* Filas de la tabla */
+
 .table-view .table-row-cell {
     -fx-border-width: 0 0 1px 0; /* Borde inferior de cada fila */
-    -fx-background-color: #f4f4f4; /* Fondo de las filas */
+    -fx-background-color: #F4F4F4; /* Fondo de las filas */
     -fx-border-color: #D9D9D9; /* Color del borde */
     -fx-border-style: solid; /* Estilo de borde */
     -fx-font-family: "Montserrat Bold";
@@ -82,12 +76,6 @@
     -fx-cursor: hand; /* El cursor cambia a "hand" cuando hay datos */
 }
 
-/* Asegurarse de que las celdas vacías no tengan hover ni cursor */
-.table-view .table-row-cell:empty:hover {
-    -fx-background-color: transparent; /* Sin fondo al hacer hover en celdas vacías */
-    -fx-cursor: default; /* Cursor por defecto */
-}
-
 /* Asegurar que el fondo seleccionado no cambie al hacer hover en elementos seleccionados */
 .table-view .table-row-cell:selected:hover {
     -fx-background-color: rgba(200, 200, 200, 0.25); /* Fondo suave al estar seleccionada */
@@ -98,6 +86,36 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-padding: 0;
+}
+
+.text-field {
+    -fx-background-radius: 70;
+    -fx-border-radius: 70;
+    -fx-background-color: #ffffff;
+    -fx-font-family: 'Montserrat Bold';
+    -fx-font-size: 15px;
+    -fx-text-fill: #a6a6a6;
+    -fx-border-width: 1;
+    -fx-border-color: black; /* Cambiar si deseas un borde visible */
+    -fx-padding: 10; /* Ajusta para más o menos espacio interior */
+}
+
+/* Estilo general para el HBox */
+.hbox-container {
+    -fx-background-color: white; /* Fondo claro */
+    -fx-background-radius: 30px; /* Redondear las esquinas */
+    -fx-border-color: #474952; /* Quitar bordes */
+    -fx-border-radius: 30px;
+    -fx-padding: 5px; /* Espaciado interno */
+    -fx-spacing: 10px; /* Espaciado entre los elementos dentro del HBox */
+    -fx-alignment: center; /* Centrar los elementos dentro del HBox */
+}
+
+/* Estilo para el TextField (haciendo que sea invisible) */
+.hbox-container .text-field {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-width: 0; /* Sin borde */
+    -fx-pref-width: 200px; /* Ajustar el tamaño según sea necesario */
 }
 
 /* Estilo base para los botones */
@@ -130,88 +148,53 @@
     -fx-font-family: "Montserrat Medium"; /* Fuente más destacada */
 }
 
-/* Estilo general para el HBox */
-.hbox-container {
-    -fx-background-color: white; /* Fondo claro */
-    -fx-background-radius: 30px; /* Redondear las esquinas */
-    -fx-border-color: #474952; /* Quitar bordes */
-    -fx-border-radius: 30px;
-    -fx-padding: 5px; /* Espaciado interno */
-    -fx-spacing: 10px; /* Espaciado entre los elementos dentro del HBox */
-    -fx-alignment: center; /* Centrar los elementos dentro del HBox */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-font-family: "Montserrat Bold"; /* Cambia a Montserrat Bold */
+    -fx-font-size: 16px; /* Tamaño de fuente */
 }
 
-/* Estilo para el TextField (haciendo que sea invisible) */
-.hbox-container .text-field {
+.list-cell {
     -fx-background-color: transparent; /* Fondo transparente */
-    -fx-border-width: 0; /* Sin borde */
-    -fx-pref-width: 200px; /* Ajustar el tamaño según sea necesario */
+    -fx-border-color: transparent; /* Sin bordes entre elementos */
 }
 
-/* Estilo solo para el TextField de nombre del producto */
-#productNameField {
-    -fx-background-color: #ffffff; /* Fondo blanco */
-    -fx-background-radius: 3px; /* Redondear las esquinas */
-    -fx-border-radius: 3px; /* Bordes redondeados */
-    -fx-border-color: #f4f4f4; /* Color de borde suave */
-    -fx-border-width: 2px; /* Ancho del borde */
-    -fx-padding: 10px; /* Espaciado interno */
-    -fx-font-size: 16px; /* Tamaño de fuente */
-    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
-    -fx-text-fill: #333333; /* Color del texto */
-    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+/* Opcional: Si prefieres que sea blanco */
+.list-cell:filled {
+    -fx-background-color: #ffffff; /* Blanco */
 }
 
-/* Estilo solo para el TextField del Peso */
-#pesoField {
-    -fx-background-color: #ffffff; /* Fondo blanco */
-    -fx-background-radius: 3px; /* Redondear las esquinas */
-    -fx-border-radius: 3px; /* Bordes redondeados */
-    -fx-border-color: #f4f4f4; /* Color de borde suave */
-    -fx-border-width: 2px; /* Ancho del borde */
-    -fx-padding: 10px; /* Espaciado interno */
-    -fx-font-size: 16px; /* Tamaño de fuente */
-    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
-    -fx-text-fill: #333333; /* Color del texto */
-    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+/* Quita el efecto de selección (opcional) */
+.list-cell:filled:selected, .list-cell:filled:hover {
+    -fx-background-color: transparent; /* O usa otro color */
 }
 
-/* Estilo solo para el TextField de Cantidad */
-#itemCantidad {
-    -fx-background-color: #ffffff; /* Fondo blanco */
-    -fx-background-radius: 3px; /* Redondear las esquinas */
-    -fx-border-radius: 3px; /* Bordes redondeados */
-    -fx-border-color: #f4f4f4; /* Color de borde suave */
-    -fx-border-width: 2px; /* Ancho del borde */
-    -fx-padding: 10px; /* Espaciado interno */
-    -fx-font-size: 16px; /* Tamaño de fuente */
-    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
-    -fx-text-fill: #333333; /* Color del texto */
-    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+/* Estilo para el ComboBox */
+.combo-box {
+    -fx-border-color: black; /* Borde negro */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Puedes ajustar el radio del borde */
+    -fx-background-color: #f4f4f4; /* Fondo gris claro */
+    -fx-background-radius: 5px;
+    -fx-font-family: 'Montserrat Bold'; /* Fuente Montserrat Bold */
+    -fx-font-size: 15px; /* Tamaño de la fuente */
 }
 
-/* Estilo cuando el TextField de nombre del producto tiene foco */
-#productNameField:focused {
-    -fx-border-color: #d1e2ea; /* Borde verde cuando está enfocado */
-    -fx-background-color: #ffffff; /* Fondo blanco claro cuando tiene foco */
+/* Estilo para las opciones desplegadas */
+.combo-box-popup .list-view {
+    -fx-background-color: white; /* Fondo blanco para las opciones */
+    -fx-border-color: black; /* Borde negro para la lista desplegable */
+    -fx-border-width: 1px;
 }
 
-/* Estilo solo para el TextField de precio del producto */
-#productPriceField {
-    -fx-background-color: #ffffff; /* Fondo blanco */
-    -fx-background-radius: 3px; /* Redondear las esquinas */
-    -fx-border-radius: 3px; /* Bordes redondeados */
-    -fx-border-color: #f4f4f4; /* Color de borde suave */
-    -fx-border-width: 2px; /* Ancho del borde */
-    -fx-padding: 10px; /* Espaciado interno */
-    -fx-font-size: 16px; /* Tamaño de fuente */
-    -fx-font-family: 'Montserrat Bold', sans-serif; /* Fuente moderna */
-    -fx-text-fill: #333333; /* Color del texto */
-    -fx-effect: innershadow( gaussian, rgba(0,0,0,0.1), 5, 0.0, 0, 2 ); /* Efecto de sombra sutil */
+/* Estilo para los elementos individuales en la lista */
+.combo-box-popup .list-cell {
+    -fx-font-family: 'Montserrat Bold'; /* Fuente Montserrat Bold */
+    -fx-font-size: 15px; /* Tamaño de la fuente */
+    -fx-text-fill: black; /* Color del texto */
+    -fx-background-color: white; /* Fondo blanco para las celdas */
 }
 
-/* Estilo cuando el TextField de precio del producto tiene foco */
-#productPriceField:focused {
-    -fx-border-color: #d1e2ea; /* Borde naranja cuando está enfocado */
-    -fx-background-color: #ffffff; /* Fondo gris claro cuando tiene foco */
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #f0f0f0; /* Fondo más claro al pasar el mouse */
 }
