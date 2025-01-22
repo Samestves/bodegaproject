@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Tooltip;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainController {
 
@@ -50,23 +53,29 @@ public class MainController {
         tooltip.setShowDelay(javafx.util.Duration.millis(400)); // Tiempo de 0.3 segundos
     }
 
+    // Método para cambiar al contenido principal (Home)
     @FXML
     private void switchToMain() {
-        // Elimina la barra de botones (si ya está añadida)
-        HBox buttonBar = (HBox) viewContainer.lookup("#buttonBar");
-        if (buttonBar != null) {
-            viewContainer.getChildren().remove(buttonBar);
-        }
+        // Limpia el contenido del StackPane para volver al estado inicial
+        contentPane.getChildren().clear();
 
-        // Cargar la vista principal (sin los botones)
-        loadView("/views/main-view.fxml");
+        // Carga la imagen desde los recursos
+        Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/logoBodega.png")).toExternalForm());
 
-        // Restaurar la barra de botones
-        viewContainer.setBottom(buttonBar);
+        // Crea un ImageView para mostrar la imagen
+        ImageView imageView = new ImageView(image);
 
-        // Cambiar el color de fondo del StackPane al original
+        // Ajusta las dimensiones del ImageView
+        imageView.setFitWidth(1100.0);
+        imageView.setFitHeight(600.0);
+        imageView.setPreserveRatio(true); // Mantiene la relación de aspecto de la imagen
+
+        // Añade el ImageView al StackPane
+        contentPane.getChildren().add(imageView);
+
+        // Cambiar el color de fondo del StackPane solo si es diferente
         String currentBackground = contentPane.getStyle();
-        if (!"-fx-background-color: white;".equals(currentBackground)) {
+        if (!"-fx-background-color: #212529;".equals(currentBackground)) {
             contentPane.setStyle("-fx-background-color: #212529;");
         }
     }
