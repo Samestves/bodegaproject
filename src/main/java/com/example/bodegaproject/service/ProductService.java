@@ -4,6 +4,7 @@ import com.example.bodegaproject.database.SQLiteConnection;
 import com.example.bodegaproject.models.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,53 +124,48 @@ public class ProductService {
         return null;
     }
 
-    public static void restarProductos(List<String> productosVendidos) {
-        String querySelect = "SELECT cantidad FROM products WHERE producto = ?";
-        String queryUpdate = "UPDATE products SET cantidad = cantidad - ? WHERE producto = ?";
+    public static void restarProductos(List<Pair<String, Integer>> productosConCantidad) {
+        String querySelect = "SELECT cantidad FROM products WHERE codigo = ?";
+        String queryUpdate = "UPDATE products SET cantidad = cantidad - ? WHERE codigo = ?";
 
         try (Connection conn = SQLiteConnection.getConnection()) {
-            // Preparar la consulta para verificar la cantidad en inventario
-            try (PreparedStatement selectStmt = conn.prepareStatement(querySelect)) {
+            // Preparar las consultas
+            try (PreparedStatement selectStmt = conn.prepareStatement(querySelect);
+                 PreparedStatement updateStmt = conn.prepareStatement(queryUpdate)) {
 
-                for (String productoStr : productosVendidos) {
-                    // Suponiendo que el formato de productoStr es "cantidadSeleccionada producto --------------- totalProducto BS"
-                    String[] parts = productoStr.split(" - "); // Separar en base al delimitador " --------------- "
+                for (Pair<String, Integer> producto : productosConCantidad) {
+                    String codigo = producto.getKey(); // Código del producto
+                    int cantidadVendida = producto.getValue(); // Cantidad vendida
 
-                    // Extraemos la cantidad y el nombre del producto
-                    String cantidadStr = parts[0].trim().split(" ")[0];  // Extraemos la cantidad (antes del nombre)
-                    String producto = parts[0].trim().substring(cantidadStr.length()).trim();  // El nombre del producto
-
-                    int cantidadVendida = Integer.parseInt(cantidadStr);  // Convertir cantidad a entero
-
-                    // Verificamos si hay suficiente cantidad en inventario
-                    selectStmt.setString(1, producto);
+                    // Verificar si hay suficiente cantidad en inventario
+                    selectStmt.setString(1, codigo);
                     try (ResultSet rs = selectStmt.executeQuery()) {
                         if (rs.next()) {
                             int cantidadEnInventario = rs.getInt("cantidad");
 
+                            // Verificar si el inventario es suficiente para la venta
                             if (cantidadEnInventario >= cantidadVendida) {
-                                // Si hay suficiente cantidad, procedemos a descontar
-                                try (PreparedStatement updateStmt = conn.prepareStatement(queryUpdate)) {
-                                    updateStmt.setInt(1, cantidadVendida);
-                                    updateStmt.setString(2, producto);
-                                    updateStmt.executeUpdate();
+                                int nuevaCantidad = cantidadEnInventario - cantidadVendida;
+
+                                if (nuevaCantidad < 0) {
+                                    throw new RuntimeException("Stock insuficiente para el producto con código: " + codigo);
                                 }
+
+                                // Actualizamos la cantidad en inventario
+                                updateStmt.setInt(1, cantidadVendida);
+                                updateStmt.setString(2, codigo);
+                                updateStmt.executeUpdate();
                             } else {
-                                // Si no hay suficiente cantidad, lanzamos un error
-                                LOGGER.log(Level.WARNING, "No hay suficiente stock para el producto: " + producto);
-                                throw new RuntimeException("No hay suficiente stock para el producto: " + producto);
+                                throw new RuntimeException("Stock insuficiente para el producto con código: " + codigo);
                             }
                         } else {
-                            // Si no se encuentra el producto, lanzamos un error
-                            LOGGER.log(Level.WARNING, "Producto no encontrado en inventario: " + producto);
-                            throw new RuntimeException("Producto no encontrado en inventario: " + producto);
+                            throw new RuntimeException("Producto no encontrado con código: " + codigo);
                         }
                     }
                 }
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error al descontar productos del inventario", e);
-            throw new RuntimeException("Error al descontar productos del inventario", e);
+            throw new RuntimeException("Error al actualizar el inventario", e);
         }
     }
 }

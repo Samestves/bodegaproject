@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class SalesController {
     private double totalVenta; // Total de la venta actual
     private ObservableList<Product> ProductList;
     private final Map<Product, Integer> selectedQuantities = new HashMap<>();
+    private final Map<String, String> productCodes = new HashMap<>();
 
 
     @FXML
@@ -77,29 +79,48 @@ public class SalesController {
         Product selectedProduct = salesTable.getSelectionModel().getSelectedItem();
 
         if (selectedProduct != null) {
-            // Obtén la cantidad seleccionada del mapa
+            // Obtén la cantidad seleccionada o usa 1 como predeterminado
             Integer cantidadSeleccionada = selectedQuantities.getOrDefault(selectedProduct, 1);
 
             if (cantidadSeleccionada > 0) {
-                // Calcula el precio total por la cantidad seleccionada
+                // Calcula el total del producto
                 double totalProducto = cantidadSeleccionada * selectedProduct.getPrecio();
                 totalVenta += totalProducto;
 
-                // Formatear la cantidad y nombre a la izquierda
-                String cantidadStr = String.format("%-5d", cantidadSeleccionada);  // 5 caracteres para la cantidad
-                String productoStr = String.format("%-20s", selectedProduct.getProducto());  // 20 caracteres para el nombre
+                // Construye una línea formateada sin mostrar el código
+                String formattedProduct = formatProductLine(cantidadSeleccionada, selectedProduct.getProducto(), totalProducto);
 
-                // Formatear el monto a la derecha
-                String totalStr = String.format("%10.2f", totalProducto);  // 10 caracteres para el total con dos decimales
-
-                // Concatenamos el formato deseado
-                String formattedProduct = cantidadStr + productoStr + totalStr + " BS";
+                // Agrega la línea al carrito y almacena el código internamente
                 listItems.getItems().add(formattedProduct);
+                productCodes.put(formattedProduct, selectedProduct.getCodigo()); // Asocia la línea al código del producto
 
                 // Actualiza el total en la UI
-                totalLabel.setText(totalVenta + " BS");
+                totalLabel.setText(String.format("%.2f BS", totalVenta));
             }
         }
+    }
+
+    /**
+     * Formatea una línea para mostrar en la lista.
+     * @param cantidad La cantidad seleccionada del producto.
+     * @param nombreProducto El nombre del producto.
+     * @param total El total calculado del producto.
+     * @return Una línea formateada.
+     */
+    private String formatProductLine(int cantidad, String nombreProducto, double total) {
+        int nombreProductoWidth = 17; // Ajusta el ancho para la columna del producto
+        String cantidadStr = String.format("%-3d", cantidad); // 3 caracteres para la cantidad
+        String productoStr;
+
+        // Recortar y formatear el nombre del producto si es necesario
+        if (nombreProducto.length() > nombreProductoWidth) {
+            productoStr = String.format("%-" + nombreProductoWidth + "s", nombreProducto.substring(0, nombreProductoWidth - 3) + "...");
+        } else {
+            productoStr = String.format("%-" + nombreProductoWidth + "s", nombreProducto);
+        }
+
+        String totalStr = String.format("%10.2f BS", total); // 10 caracteres para el total + "BS"
+        return cantidadStr + productoStr + totalStr;
     }
 
     @FXML
@@ -118,11 +139,20 @@ public class SalesController {
         List<String> productosVendidos = new ArrayList<>(listItems.getItems());
 
         try {
+            // Preparar lista de códigos y cantidades para el método restarProductos
+            List<Pair<String, Integer>> productosConCantidad = new ArrayList<>();
+            for (String producto : productosVendidos) {
+                String codigo = productCodes.get(producto); // Obtiene el código asociado
+                int cantidadVendida = Integer.parseInt(producto.split("\\s+")[0]); // Extrae la cantidad desde el formato
+                productosConCantidad.add(new Pair<>(codigo, cantidadVendida));
+            }
+
             // Descontar productos del inventario (o base de datos)
-            ProductService.restarProductos(productosVendidos);
+            ProductService.restarProductos(productosConCantidad);
 
             // Limpia el carrito y reinicia el total
             listItems.getItems().clear();
+            productCodes.clear(); // Limpia los códigos asociados
             totalVenta = 0.0;
             totalLabel.setText("0.0 BS");
 
@@ -140,6 +170,7 @@ public class SalesController {
             alert.setHeaderText("No se pudo realizar la venta");
             alert.setContentText(e.getMessage());  // Muestra el mensaje de error
             listItems.getItems().clear();
+            productCodes.clear(); // Limpia los códigos asociados
             totalVenta = 0.0;
             totalLabel.setText("0.0 BS");
             alert.showAndWait();

@@ -7,31 +7,32 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
 
 <BorderPane fx:id="viewContainer" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bodegaproject.controllers.MainController">
     <!-- Vista principal con contenido dinámico -->
     <center>
         <StackPane fx:id="contentPane" style="-fx-background-color: #212529;">
-         <children>
             <ImageView fitHeight="600.0" fitWidth="1100.0" StackPane.alignment="CENTER">
-               <image>
-                  <Image url="@../images/logoBodega.png" />
-               </image>
+                <Image url="@../images/logoBodega.png"/>
             </ImageView>
-         </children></StackPane>
+        </StackPane>
     </center>
     <bottom>
         <!-- Botones fijos en la parte inferior -->
         <HBox fx:id="buttonBar" alignment="CENTER" prefHeight="80.0" spacing="10" style="-fx-background-color: #212529; -fx-padding: 10;">
          <Button fx:id="homeButton" alignment="CENTER" focusTraversable="false" onAction="#switchToMain" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
-               <ImageView  accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
-                  <image>
-                     <Image url="@../images/home-icon.png" />
-                  </image>
-               </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
+                    <Image url="@../images/home-icon.png"/>
+                </ImageView>
             </graphic>
          </Button>
+         <Line endX="-100.0" endY="50.0" fill="WHITE" nodeOrientation="LEFT_TO_RIGHT" startX="-100.0" startY="30.0" stroke="#f4f4f4" strokeLineCap="ROUND" strokeWidth="0.4">
+            <HBox.margin>
+               <Insets top="4.0" />
+            </HBox.margin>
+         </Line>
             <Button fx:id="inventoryButton" alignment="CENTER" focusTraversable="false" onAction="#switchToInventory" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <HBox.margin>
                <Insets />
@@ -43,19 +44,15 @@
             </graphic></Button>
             <Button fx:id="salesButton" focusTraversable="false" onAction="#switchToSales" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
-               <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
-                  <image>
-                     <Image url="@../images/cart-icon.png" />
-                  </image>
-               </ImageView>
+                <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+                    <Image url="@../images/cart-icon.png"/>
+                </ImageView>
             </graphic></Button>
             <Button fx:id="creditsButton" focusTraversable="false" onAction="#switchToCredits" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
-               <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
-                  <image>
-                     <Image url="@../images/client-icon.png" />
-                  </image>
-               </ImageView>
+                <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
+                    <Image url="@../images/client-icon.png"/>
+                </ImageView>
             </graphic></Button>
         </HBox>
     </bottom>
