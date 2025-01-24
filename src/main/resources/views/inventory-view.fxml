@@ -15,7 +15,12 @@
 <AnchorPane minHeight="380.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bodegaproject.controllers.InventoryController">
     <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <!-- Panel izquierdo -->
-        <VBox alignment="CENTER" maxHeight="Infinity" prefHeight="400.0" prefWidth="280.0" spacing="20" style="-fx-padding: 20;" VBox.vgrow="NEVER">
+        <VBox alignment="TOP_CENTER" maxHeight="Infinity" prefHeight="400.0" prefWidth="280.0" spacing="20" style="-fx-padding: 20;" VBox.vgrow="NEVER">
+         <ImageView fitHeight="115.0" fitWidth="290.0" preserveRatio="true">
+            <image>
+               <Image url="@../images/inventory.jpg" />
+            </image>
+         </ImageView>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="212.0" spacing="10" styleClass="hbox-container" stylesheets="@../styles/styles.css">
                 <TextField fx:id="searchTextField" alignment="CENTER" focusTraversable="false" promptText="Buscar Producto" styleClass="text-field" stylesheets="@../styles/styles.css">
                     <font>
@@ -64,11 +69,11 @@
         <!-- Tabla de productos -->
         <TableView fx:id="tableView" stylesheets="@../styles/styles.css" HBox.hgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="productoColumn" prefWidth="246.0" text="PRODUCTO" />
-                <TableColumn fx:id="pesoColumn" prefWidth="141.0" text="PESO" />
-                <TableColumn fx:id="cantidadColumn" prefWidth="177.0" text="CANTIDAD" />
                 <TableColumn fx:id="codigoColumn" prefWidth="146.0" text="CODIGO" />
+                <TableColumn fx:id="productoColumn" prefWidth="229.0" text="PRODUCTO" />
+                <TableColumn fx:id="pesoColumn" prefWidth="158.0" text="PACK" />
                 <TableColumn fx:id="precioColumn" prefWidth="166.0" text="PRECIO" />
+                <TableColumn fx:id="cantidadColumn" prefWidth="177.0" text="STOCK" />
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

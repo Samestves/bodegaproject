@@ -119,7 +119,7 @@ public class SalesController {
             productoStr = String.format("%-" + nombreProductoWidth + "s", nombreProducto);
         }
 
-        String totalStr = String.format("%10.2f BS", total); // 10 caracteres para el total + "BS"
+        String totalStr = String.format("%11.2f BS", total); // 10 caracteres para el total + "BS"
         return cantidadStr + productoStr + totalStr;
     }
 
