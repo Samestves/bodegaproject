@@ -18,7 +18,7 @@ public class SalesController {
     @FXML public ListView<String> listItems;
     @FXML public TableColumn<Product, Integer> qtyColumn; // Definimos la columna de cantidad como Integer
     @FXML private TableView<Product> salesTable;
-    @FXML private TableColumn<Product, String> codigoColumn;
+    @FXML private TableColumn<Product, String> packColumn;
     @FXML private TableColumn<Product, String> productColumn;
     @FXML private TableColumn<Product, Integer> precioColumn;
     @FXML private Label totalLabel;
@@ -36,7 +36,7 @@ public class SalesController {
 
     private void configureTableView() {
         // Configuración de las columnas normales
-        codigoColumn.setCellValueFactory(cellData -> cellData.getValue().codigoProperty());
+        packColumn.setCellValueFactory(cellData -> cellData.getValue().pesoProperty());
         productColumn.setCellValueFactory(cellData -> cellData.getValue().productoProperty());
         precioColumn.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
 

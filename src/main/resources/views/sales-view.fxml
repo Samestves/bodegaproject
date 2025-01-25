@@ -22,10 +22,10 @@
          <!-- Table Section -->
          <TableView fx:id="salesTable" focusTraversable="false" nodeOrientation="LEFT_TO_RIGHT" stylesheets="@../styles/sales.css" VBox.vgrow="ALWAYS">
             <columns>
-               <TableColumn fx:id="productColumn" prefWidth="119.0" text="Productos" />
-               <TableColumn fx:id="qtyColumn" prefWidth="114.0" text="Cantidad" />
-               <TableColumn fx:id="codigoColumn" prefWidth="78.0" text="Codigo" />
-               <TableColumn fx:id="precioColumn" prefWidth="98.0" text="Precio" />
+               <TableColumn fx:id="productColumn" prefWidth="119.0" text="PRODUCTOS" />
+               <TableColumn fx:id="packColumn" prefWidth="78.0" text="PACK" />
+               <TableColumn fx:id="precioColumn" prefWidth="98.0" text="PRECIO" />
+               <TableColumn fx:id="qtyColumn" prefWidth="114.0" sortable="false" text="STOCK" />
             </columns>
             <columnResizePolicy>
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -57,9 +57,9 @@
    <!-- Right Panel -->
    <right>
       <VBox prefHeight="511.0" prefWidth="390.0" spacing="10" style="-fx-padding: 10; -fx-border-color: #d9d9d9; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 2;">
-         <Label alignment="CENTER" style="-fx-font-weight: bold;" text="ITEMS">
+         <Label alignment="CENTER" prefHeight="22.0" prefWidth="380.0" style="-fx-font-weight: bold;" text="ARTICULOS">
             <font>
-               <Font name="Montserrat Bold" size="17.0" />
+               <Font name="Montserrat Bold" size="16.0" />
             </font></Label>
          <ListView fx:id="listItems" focusTraversable="false" stylesheets="@../styles/sales.css" VBox.vgrow="ALWAYS" />
          <Line endX="99.75115203857422" scaleX="1.5" startX="-100.0" stroke="#e8e8e8" strokeLineCap="ROUND" strokeWidth="0.9" translateX="80.0" translateY="-10.0">

@@ -35,7 +35,7 @@ public class RegisterProductController {
     private ChoiceBox<String> categoryChoiceBox;
 
     private static final String[] CATEGORIES = {"Comida", "Bebida", "Limpieza", "Otro"};
-    private static final String[] PESO_UNIDADES = {"kg", "L"};
+    private static final String[] PESO_UNIDADES = {"G","KG", "L"};
 
     @FXML
     private void initialize() {
@@ -61,14 +61,15 @@ public class RegisterProductController {
         String pesoUnidad = pesoBox.getValue();
         String cantidadText = itemCantidad.getText();
 
-        if (!validateFields(name, priceText, pesoText, cantidadText, pesoUnidad)) return;
+        if (!validateFields(name, priceText, cantidadText)) return;
 
         try {
             double price = Double.parseDouble(priceText);
             int cantidad = Integer.parseInt(cantidadText);
-            double peso = Double.parseDouble(pesoText);
 
-            String pesoVolumen = peso + " " + pesoUnidad;
+            // Manejar peso opcional
+            String pesoVolumen = formatPesoVolumen(pesoText, pesoUnidad);
+
             name = name.toUpperCase();
 
             if (ProductService.findProductByName(name)) {
@@ -93,8 +94,8 @@ public class RegisterProductController {
         }
     }
 
-    private boolean validateFields(String name, String priceText, String pesoText, String cantidadText, String pesoUnidad) {
-        if (name.isEmpty() || priceText.isEmpty() || pesoText.isEmpty() || cantidadText.isEmpty() || pesoUnidad == null) {
+    private boolean validateFields(String name, String priceText, String cantidadText) {
+        if (name.isEmpty() || priceText.isEmpty() || cantidadText.isEmpty()) {
             setStatus("TODOS LOS CAMPOS SON OBLIGATORIOS.");
             return false;
         }
@@ -111,16 +112,6 @@ public class RegisterProductController {
             }
         } catch (NumberFormatException e) {
             setStatus("EL PRECIO DEBE SER UN NÚMERO VÁLIDO.");
-            return false;
-        }
-
-        try {
-            if (Double.parseDouble(pesoText) <= 0) {
-                setStatus("EL PESO DEBE SER UN NÚMERO POSITIVO.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            setStatus("EL PESO DEBE SER UN NÚMERO VÁLIDO.");
             return false;
         }
 
@@ -149,6 +140,23 @@ public class RegisterProductController {
         if (!input.matches("\\d")) {
             event.consume();
         }
+    }
+
+    private String formatPesoVolumen(String pesoText, String pesoUnidad) {
+        if (pesoText.isEmpty() || pesoUnidad == null || pesoUnidad.isEmpty()) {
+            return "-"; // Asignar valor por defecto
+        }
+
+        try {
+            double peso = Double.parseDouble(pesoText);
+            if (peso > 0) {
+                return peso + " " + pesoUnidad;
+            }
+        } catch (NumberFormatException ignored) {
+            // Ignorar el error si no es un número
+        }
+
+        return "-";
     }
 
     private void setStatus(String message) {
