@@ -2,6 +2,7 @@ package com.example.bodegaproject.service;
 
 import com.example.bodegaproject.database.SQLiteConnection;
 import com.example.bodegaproject.models.Product;
+import com.example.bodegaproject.utils.ProductServiceException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -10,162 +11,158 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProductService {
 
-    private static final ObservableList<Product> productList = FXCollections.observableArrayList();
     private static final Logger LOGGER = Logger.getLogger(ProductService.class.getName());
 
-    public static ObservableList<Product> loadProducts() {
-        productList.clear();
-        String query = "SELECT * FROM products";  // Consulta para obtener todos los productos
+    // Consultas SQL
+    private static final String QUERY_LOAD_PRODUCTS = "SELECT * FROM products";
+    private static final String QUERY_ADD_PRODUCT = "INSERT INTO products (codigo, producto, precio, peso_volumen, cantidad) VALUES (?, ?, ?, ?, ?)";
+    private static final String QUERY_UPDATE_PRICE = "UPDATE products SET precio = ? WHERE codigo = ?";
+    private static final String QUERY_DELETE_PRODUCT = "DELETE FROM products WHERE codigo = ?";
+    private static final String QUERY_FIND_PRODUCT_BY_NAME = "SELECT COUNT(*) FROM products WHERE UPPER(producto) = ?";
+    private static final String QUERY_GET_LAST_PRODUCT_CODE = "SELECT codigo FROM products WHERE codigo LIKE ? ORDER BY codigo DESC LIMIT 1";
+    private static final String QUERY_RESTAR_PRODUCTOS_SELECT = "SELECT cantidad FROM products WHERE codigo = ?";
+    private static final String QUERY_RESTAR_PRODUCTOS_UPDATE = "UPDATE products SET cantidad = cantidad - ? WHERE codigo = ?";
+
+    // Inicialización de la base de datos
+    static {
+        try {
+            SQLiteConnection.initializeDatabaseDirectory();
+            SQLiteConnection.getConnection();
+            createProductsTable();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error al inicializar la base de datos", e);
+        }
+    }
+
+    private static void createProductsTable() throws SQLException {
+        String query = "CREATE TABLE IF NOT EXISTS products (" +
+                "codigo TEXT PRIMARY KEY, " +
+                "producto TEXT NOT NULL, " +
+                "precio INTEGER NOT NULL, " +
+                "peso_volumen TEXT, " +
+                "cantidad INTEGER NOT NULL)";
 
         try (Connection conn = SQLiteConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.execute();
+        }
+    }
+
+    public static ObservableList<Product> loadProducts() {
+        ObservableList<Product> productList = FXCollections.observableArrayList();
+
+        try (Connection conn = SQLiteConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(QUERY_LOAD_PRODUCTS);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 String codigo = rs.getString("codigo");
                 String nombre = rs.getString("producto");
                 int precio = rs.getInt("precio");
-                int cantidad = rs.getInt("cantidad");  // Obtenemos la cantidad del producto
-                String pesoVolumen = rs.getString("peso_volumen");  // Obtenemos el peso/volumen del producto
+                int cantidad = rs.getInt("cantidad");
+                String pesoVolumen = rs.getString("peso_volumen");
 
-                // Crear el producto con los nuevos campos: cantidad y peso_volumen
                 Product product = new Product(codigo, nombre, precio, cantidad, pesoVolumen);
-
-                // Añadir el producto a la lista observable
                 productList.add(product);
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error al cargar productos desde la base de datos", e);
         }
+
         return productList;
     }
 
-    public static void addProduct(Product product) {
-        String query = "INSERT INTO products (codigo, producto, precio, peso_volumen, cantidad) VALUES (?, ?, ?, ?, ?)";
+    public static void addProduct(Product product) throws ProductServiceException {
         try (Connection conn = SQLiteConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(QUERY_ADD_PRODUCT)) {
             stmt.setString(1, product.getCodigo());
             stmt.setString(2, product.getProducto());
             stmt.setInt(3, product.getPrecio());
-            stmt.setString(4, product.getPesoVolumen()); // Peso como String
-            stmt.setInt(5, product.getCantidad()); // Cantidad como int
+            stmt.setString(4, product.getPesoVolumen());
+            stmt.setInt(5, product.getCantidad());
             stmt.executeUpdate();
-            productList.add(product); // Actualiza la lista
         } catch (SQLException e) {
-            throw new RuntimeException("Error al agregar el producto", e);
+            throw new ProductServiceException("Error al agregar el producto", e);
         }
     }
 
-    public static void updateProductPrice(Product product, int newPrice) {
-        String query = "UPDATE products SET precio = ? WHERE codigo = ?";
+    public static void updateProductPrice(Product product, int newPrice) throws ProductServiceException {
         try (Connection conn = SQLiteConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(QUERY_UPDATE_PRICE)) {
             stmt.setInt(1, newPrice);
             stmt.setString(2, product.getCodigo());
             stmt.executeUpdate();
-
-            // Actualiza el precio en la lista observable
-            product.setPrecio(newPrice);
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el precio del producto", e);
+            throw new ProductServiceException("Error al actualizar el producto", e);
         }
     }
 
-    public static void deleteProduct(Product product) {
-        String query = "DELETE FROM products WHERE codigo = ?";
+    public static void deleteProduct(Product product) throws ProductServiceException {
         try (Connection conn = SQLiteConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(QUERY_DELETE_PRODUCT)) {
             stmt.setString(1, product.getCodigo());
             stmt.executeUpdate();
-            productList.remove(product);  // Elimina el producto de la lista
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar el producto", e);
+            throw new ProductServiceException("Error al eliminar el producto", e);
         }
     }
 
-    public static boolean findProductByName(String name) {
-        try (Connection conn = SQLiteConnection.getConnection()) {
-            String query = "SELECT COUNT(*) FROM products WHERE UPPER(producto) = ?";
-            try (PreparedStatement statement = conn.prepareStatement(query)) {
-                statement.setString(1, name.toUpperCase());
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return resultSet.getInt(1) > 0;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error al buscar producto en la base de datos", e);
-        }
-        return false;
-    }
-
-    public static String getLastProductCode(String prefix) {
-        String query = "SELECT codigo FROM products WHERE codigo LIKE ? ORDER BY codigo DESC LIMIT 1";
+    public static boolean findProductByName(String name) throws ProductServiceException {
         try (Connection conn = SQLiteConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, prefix + "%");
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getString("codigo");
+             PreparedStatement stmt = conn.prepareStatement(QUERY_FIND_PRODUCT_BY_NAME)) {
+            stmt.setString(1, name.toUpperCase());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
             }
-
         } catch (SQLException e) {
-            Logger.getLogger(ProductService.class.getName()).log(Level.SEVERE, "Error al obtener el último código", e);
+            throw new ProductServiceException("Error al buscar el producto por nombre", e);
         }
-        return null;
     }
 
-    public static void restarProductos(List<Pair<String, Integer>> productosConCantidad) {
-        String querySelect = "SELECT cantidad FROM products WHERE codigo = ?";
-        String queryUpdate = "UPDATE products SET cantidad = cantidad - ? WHERE codigo = ?";
+    public static String getLastProductCode(String prefix) throws SQLException {
+        try (Connection conn = SQLiteConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(QUERY_GET_LAST_PRODUCT_CODE)) {
+            stmt.setString(1, prefix + "%");
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? rs.getString("codigo") : null;
+            }
+        }
+    }
 
-        try (Connection conn = SQLiteConnection.getConnection()) {
-            // Preparar las consultas
-            try (PreparedStatement selectStmt = conn.prepareStatement(querySelect);
-                 PreparedStatement updateStmt = conn.prepareStatement(queryUpdate)) {
+    public static void restarProductos(List<Pair<String, Integer>> productosConCantidad) throws SQLException {
+        try (Connection conn = SQLiteConnection.getConnection();
+             PreparedStatement selectStmt = conn.prepareStatement(QUERY_RESTAR_PRODUCTOS_SELECT);
+             PreparedStatement updateStmt = conn.prepareStatement(QUERY_RESTAR_PRODUCTOS_UPDATE)) {
 
-                for (Pair<String, Integer> producto : productosConCantidad) {
-                    String codigo = producto.getKey(); // Código del producto
-                    int cantidadVendida = producto.getValue(); // Cantidad vendida
+            for (Pair<String, Integer> producto : productosConCantidad) {
+                String codigo = producto.getKey();
+                int cantidadVendida = producto.getValue();
 
-                    // Verificar si hay suficiente cantidad en inventario
-                    selectStmt.setString(1, codigo);
-                    try (ResultSet rs = selectStmt.executeQuery()) {
-                        if (rs.next()) {
-                            int cantidadEnInventario = rs.getInt("cantidad");
+                // Verificar si hay suficiente cantidad en inventario
+                selectStmt.setString(1, codigo);
+                try (ResultSet rs = selectStmt.executeQuery()) {
+                    if (rs.next()) {
+                        int cantidadEnInventario = rs.getInt("cantidad");
 
-                            // Verificar si el inventario es suficiente para la venta
-                            if (cantidadEnInventario >= cantidadVendida) {
-                                int nuevaCantidad = cantidadEnInventario - cantidadVendida;
-
-                                if (nuevaCantidad < 0) {
-                                    throw new RuntimeException("Stock insuficiente para el producto con código: " + codigo);
-                                }
-
-                                // Actualizamos la cantidad en inventario
-                                updateStmt.setInt(1, cantidadVendida);
-                                updateStmt.setString(2, codigo);
-                                updateStmt.executeUpdate();
-                            } else {
-                                throw new RuntimeException("Stock insuficiente para el producto con código: " + codigo);
-                            }
-                        } else {
-                            throw new RuntimeException("Producto no encontrado con código: " + codigo);
+                        if (cantidadEnInventario < cantidadVendida) {
+                            throw new SQLException("Stock insuficiente para el producto con código: " + codigo);
                         }
+
+                        // Actualizar la cantidad en inventario
+                        updateStmt.setInt(1, cantidadVendida);
+                        updateStmt.setString(2, codigo);
+                        updateStmt.executeUpdate();
+                    } else {
+                        throw new SQLException("Producto no encontrado con código: " + codigo);
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar el inventario", e);
         }
     }
 }

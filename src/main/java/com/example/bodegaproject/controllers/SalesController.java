@@ -2,12 +2,14 @@ package com.example.bodegaproject.controllers;
 
 import com.example.bodegaproject.models.Product;
 import com.example.bodegaproject.service.ProductService;
+import com.example.bodegaproject.utils.SearchUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Pair;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ public class SalesController {
 
     @FXML public ListView<String> listItems;
     @FXML public TableColumn<Product, Integer> qtyColumn; // Definimos la columna de cantidad como Integer
+    @FXML public TextField searchField;
     @FXML private TableView<Product> salesTable;
     @FXML private TableColumn<Product, String> packColumn;
     @FXML private TableColumn<Product, String> productColumn;
@@ -27,11 +30,15 @@ public class SalesController {
     private final Map<Product, Integer> selectedQuantities = new HashMap<>();
     private final Map<String, String> productCodes = new HashMap<>();
 
-
     @FXML
     public void initialize(){
         configureTableView();
         loadProductData();
+        configureSearchField();
+    }
+
+    private void configureSearchField() {
+        SearchUtils.configureSearchField(searchField, salesTable, ProductList);
     }
 
     private void configureTableView() {
@@ -54,12 +61,12 @@ public class SalesController {
             @Override
             protected void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                if (empty || getTableView().getItems().isEmpty()) {
                     setGraphic(null);
                 } else {
-                    setGraphic(comboBox);
                     Product product = getTableView().getItems().get(getIndex());
                     comboBox.setValue(selectedQuantities.getOrDefault(product, 1)); // Valor por defecto
+                    setGraphic(comboBox);
                 }
             }
         });
@@ -67,11 +74,13 @@ public class SalesController {
 
     private void loadProductData() {
         ProductList = FXCollections.observableArrayList(ProductService.loadProducts());
+        selectedQuantities.clear(); // Reiniciar el mapa de cantidades seleccionadas
         updateTableView();
     }
 
     private void updateTableView() {
         salesTable.setItems(ProductList);
+        salesTable.refresh(); // Forzar la actualización de la TableView
     }
 
     @FXML
@@ -163,7 +172,7 @@ public class SalesController {
             alert.setContentText("La venta se realizó correctamente.");
             alert.showAndWait();
 
-        } catch (RuntimeException e) {
+        } catch (SQLException e) {
             // Si ocurre un error (por ejemplo, no hay suficiente stock), mostrar el mensaje de error
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error en la venta");

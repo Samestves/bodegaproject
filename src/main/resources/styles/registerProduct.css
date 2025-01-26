@@ -1,0 +1,63 @@
+/* Estilos generales */
+.root {
+    -fx-background-color: white;
+    -fx-padding: 20;
+}
+
+/* Logo */
+.logo {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+/* Título */
+.title {
+    -fx-text-fill: #333333;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+/* Campos del formulario */
+.form-field {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 300px;
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+/* ChoiceBox */
+.form-choice-box {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 150px;
+    -fx-background-color: #f0f0f0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+/* Botón de registro */
+.register-button {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 120px;
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+}
+
+.register-button:hover {
+    -fx-background-color: #45a049;
+}
+
+/* Etiqueta de estado */
+.status-label {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-padding: 5 0 0 0;
+}

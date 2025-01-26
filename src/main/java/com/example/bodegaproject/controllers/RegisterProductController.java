@@ -2,15 +2,16 @@ package com.example.bodegaproject.controllers;
 
 import com.example.bodegaproject.models.Product;
 import com.example.bodegaproject.service.ProductService;
+import com.example.bodegaproject.utils.ProductServiceException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RegisterProductController {
-
     private static final Logger LOGGER = Logger.getLogger(RegisterProductController.class.getName());
 
     @FXML
@@ -20,13 +21,13 @@ public class RegisterProductController {
     private TextField productPriceField;
 
     @FXML
-    private TextField pesoField; // Campo para peso
+    private TextField pesoField;
 
     @FXML
-    private ChoiceBox<String> pesoBox; // Selección de unidad de peso
+    private ChoiceBox<String> pesoBox;
 
     @FXML
-    private TextField itemCantidad; // Cantidad de productos
+    private TextField itemCantidad;
 
     @FXML
     private Label statusLabel;
@@ -35,7 +36,7 @@ public class RegisterProductController {
     private ChoiceBox<String> categoryChoiceBox;
 
     private static final String[] CATEGORIES = {"Comida", "Bebida", "Limpieza", "Otro"};
-    private static final String[] PESO_UNIDADES = {"G","KG", "L"};
+    private static final String[] PESO_UNIDADES = {"G", "KG", "L"};
 
     @FXML
     private void initialize() {
@@ -88,9 +89,15 @@ public class RegisterProductController {
 
         } catch (NumberFormatException e) {
             setStatus("LOS CAMPOS NUMÉRICOS DEBEN CONTENER VALORES VÁLIDOS.");
+        } catch (ProductServiceException e) {
+            setStatus("ERROR AL BUSCAR EL PRODUCTO: " + e.getMessage());
+            LOGGER.log(Level.SEVERE, "Error al buscar el producto", e);
         } catch (RuntimeException e) {
             setStatus("ERROR AL REGISTRAR EL PRODUCTO.");
             LOGGER.log(Level.SEVERE, "Error al registrar el producto", e);
+        } catch (SQLException e) {
+            setStatus("ERROR DE BASE DE DATOS AL REGISTRAR EL PRODUCTO.");
+            LOGGER.log(Level.SEVERE, "Error de base de datos", e);
         }
     }
 
@@ -163,7 +170,7 @@ public class RegisterProductController {
         statusLabel.setText(message.toUpperCase());
     }
 
-    private String generateProductCode() {
+    private String generateProductCode() throws SQLException {
         String category = categoryChoiceBox.getValue();
         String prefix = getCategoryPrefix(category);
         String lastCode = ProductService.getLastProductCode(prefix);

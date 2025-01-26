@@ -56,7 +56,7 @@
 
    <!-- Right Panel -->
    <right>
-      <VBox prefHeight="511.0" prefWidth="390.0" spacing="10" style="-fx-padding: 10; -fx-border-color: #d9d9d9; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 2;">
+      <VBox prefHeight="511.0" prefWidth="400.0" spacing="10" style="-fx-padding: 10; -fx-border-color: #d9d9d9; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-width: 2;">
          <Label alignment="CENTER" prefHeight="22.0" prefWidth="380.0" style="-fx-font-weight: bold;" text="ARTICULOS">
             <font>
                <Font name="Montserrat Bold" size="16.0" />

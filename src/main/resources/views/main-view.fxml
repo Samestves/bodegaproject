@@ -13,8 +13,8 @@
     <!-- Vista principal con contenido dinámico -->
     <center>
         <StackPane fx:id="contentPane" style="-fx-background-color: #212529;">
-            <ImageView fitHeight="600.0" fitWidth="1100.0" StackPane.alignment="CENTER">
-                <Image url="@../images/logoBodega.png"/>
+            <ImageView fx:id="mainImageView" fitHeight="580.0" fitWidth="1100.0" StackPane.alignment="CENTER">
+                <Image url="@../images/logoBodega.png" />
             </ImageView>
         </StackPane>
     </center>
@@ -24,7 +24,7 @@
          <Button fx:id="homeButton" alignment="CENTER" focusTraversable="false" onAction="#switchToMain" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
                 <ImageView accessibleRole="BUTTON" fitHeight="30.0" fitWidth="30.0" preserveRatio="true">
-                    <Image url="@../images/home-icon.png"/>
+                    <Image url="@../images/home-icon.png" />
                 </ImageView>
             </graphic>
          </Button>
@@ -45,15 +45,25 @@
             <Button fx:id="salesButton" focusTraversable="false" onAction="#switchToSales" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
                 <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
-                    <Image url="@../images/cart-icon.png"/>
+                    <Image url="@../images/cart-icon.png" />
                 </ImageView>
             </graphic></Button>
             <Button fx:id="creditsButton" focusTraversable="false" onAction="#switchToCredits" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
             <graphic>
                 <ImageView fitHeight="35.0" fitWidth="35.0" preserveRatio="true">
-                    <Image url="@../images/client-icon.png"/>
+                    <Image url="@../images/client-icon.png" />
                 </ImageView>
             </graphic></Button>
+         <Line endX="-100.0" endY="50.0" fill="WHITE" nodeOrientation="LEFT_TO_RIGHT" startX="-100.0" startY="30.0" stroke="#f4f4f4" strokeLineCap="ROUND" strokeWidth="0.4" />
+         <Button fx:id="historyButton" focusTraversable="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/styles.css">
+            <graphic>
+               <ImageView fitHeight="33.0" fitWidth="33.0" preserveRatio="true">
+                  <image>
+                     <Image url="@../images/historial.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
         </HBox>
     </bottom>
 </BorderPane>

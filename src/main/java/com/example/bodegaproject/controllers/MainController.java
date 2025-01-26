@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -12,13 +11,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.control.Tooltip;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class MainController {
 
     public BorderPane viewContainer;
 
     public HBox buttonBar;
+
+    @FXML
+    private ImageView mainImageView;
 
     @FXML
     private StackPane contentPane;
@@ -56,22 +57,14 @@ public class MainController {
     // Método para cambiar al contenido principal (Home)
     @FXML
     private void switchToMain() {
-        // Limpia el contenido del StackPane para volver al estado inicial
+        // Limpia el contenido del StackPane
         contentPane.getChildren().clear();
 
-        // Carga la imagen desde los recursos
-        Image image = new Image(Objects.requireNonNull(getClass().getResource("/images/logoBodega.png")).toExternalForm());
-
-        // Crea un ImageView para mostrar la imagen
-        ImageView imageView = new ImageView(image);
-
-        // Ajusta las dimensiones del ImageView
-        imageView.setFitWidth(1100.0);
-        imageView.setFitHeight(600.0);
-        imageView.setPreserveRatio(true); // Mantiene la relación de aspecto de la imagen
-
         // Añade el ImageView al StackPane
-        contentPane.getChildren().add(imageView);
+        contentPane.getChildren().add(mainImageView);
+
+        // Asegúrate de que el ImageView esté visible
+        mainImageView.setVisible(true);
 
         // Cambiar el color de fondo del StackPane solo si es diferente
         String currentBackground = contentPane.getStyle();

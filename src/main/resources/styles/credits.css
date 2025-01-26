@@ -1,0 +1,103 @@
+/* Estilos generales */
+.root {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Panel izquierdo */
+#leftPanel {
+    -fx-padding: 20;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+/* Títulos */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Barra de búsqueda */
+.search-field {
+    -fx-background-color: #f4f4f4;
+    -fx-border-radius: 20px;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-background-radius: 20px;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 14px;
+}
+
+/* Botones */
+.add-button {
+    -fx-font-family: "Montserrat Medium"; /* Fuente Montserrat Medium */
+    -fx-background-color: #F4F4F4; /* Color del fondo */
+    -fx-background-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #d9d9d9; /* Color del borde */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-text-fill: #000000; /* Color del texto */
+    -fx-padding: 8 0; /* Espaciado interno */
+    -fx-font-size: 13px; /* Tamaño de fuente */
+    -fx-cursor: hand; /* Cambiar el cursor al pasar por encima */
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0); /* Sin sombra inicial */
+    -fx-transition: all 0.3s ease; /* Transiciones suaves */
+}
+
+.delete-button {
+    -fx-font-family: "Montserrat Medium"; /* Fuente Montserrat Medium */
+    -fx-background-color: #F4F4F4; /* Color del fondo */
+    -fx-background-radius: 3px; /* Bordes redondeados */
+    -fx-border-color: #d9d9d9; /* Color del borde */
+    -fx-border-radius: 3px; /* Bordes redondeados */
+    -fx-text-fill: #000000; /* Color del texto */
+    -fx-padding: 8 0; /* Espaciado interno */
+    -fx-font-size: 13px; /* Tamaño de fuente */
+    -fx-cursor: hand; /* Cambiar el cursor al pasar por encima */
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0); /* Sin sombra inicial */
+    -fx-transition: all 0.3s ease; /* Transiciones suaves */
+}
+
+/* Efecto hover para los botones */
+.button:hover {
+    -fx-font-family: "Montserrat Medium"; /* Cambia a Montserrat Bold */
+    -fx-background-color: #E0E0E0; /* Fondo más oscuro */
+    -fx-border-color: #bdbdbd; /* Cambia el color del borde */
+    -fx-text-fill: #000000; /* Color del texto permanece */
+}
+
+/* Efecto para botón presionado */
+.button:pressed {
+    -fx-background-color: #D6D6D6; /* Fondo más oscuro aún */
+    -fx-border-color: #b0b0b0; /* Borde más oscuro */
+    -fx-font-family: "Montserrat Medium"; /* Fuente más destacada */
+}
+
+/* Tarjetas de clientes */
+.client-card {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.client-name {
+    -fx-font-size: 16px;
+    -fx-text-fill: #444444;
+}
+
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #888888;
+    -fx-font-size: 14px;
+}
+
+/* Detalles del cliente */
+.client-details {
+    -fx-padding: 10 0 0 10;
+}
+
+.detail-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}

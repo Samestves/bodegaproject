@@ -1,12 +1,17 @@
-/* Tabla general */
-/* Filas de la tabla */
+/* ==================== Estilos para TableView ==================== */
+.table-view {
+    -fx-background-color: #F4F4F4; /* Fondo de la tabla */
+    -fx-border-color: #D9D9D9; /* Color del borde */
+    -fx-border-width: 1px;
+}
 
+/* Filas de la tabla */
 .table-view .table-row-cell {
     -fx-border-width: 0 0 1px 0; /* Borde inferior de cada fila */
     -fx-background-color: #F4F4F4; /* Fondo de las filas */
     -fx-border-color: #D9D9D9; /* Color del borde */
     -fx-border-style: solid; /* Estilo de borde */
-    -fx-font-family: "Montserrat Bold";
+    -fx-font-family: "Montserrat";
     -fx-font-size: 16px; /* Tamaño de texto */
     -fx-text-fill: #8f939b; /* Color de texto */
     -fx-transition: background-color 0.3s ease; /* Transición de fondo */
@@ -41,19 +46,7 @@
     -fx-text-fill: #000000; /* Color del texto */
     -fx-font-size: 17px;
     -fx-padding: 10 0 10 1; /* Relleno interno */
-    -fx-alignment: CENTER-LEFT; /* Alineación del texto */
-}
-
-/* Filas */
-.table-view .table-row-cell {
-    -fx-border-width: 0 0px 1px 0; /* Borde derecho e inferior de 1px */
-    -fx-background-color: #f4f4f4; /* Fondo de las filas */
-    -fx-border-color: #D9D9D9; /* Color del borde */
-    -fx-border-style: solid; /* Estilo del borde */
-    -fx-font-family: "Montserrat Bold";
-    -fx-font-size: 16px; /* Tamaño del texto */
-    -fx-text-fill: #8f939b; /* Color del texto */
-    -fx-transition: background-color 0.3s ease; /* Transición suave */
+    -fx-alignment: CENTER_LEFT; /* Alineación del texto */
 }
 
 /* Celdas */
@@ -61,7 +54,7 @@
     -fx-border-width: 0 1px 0px 0; /* Borde derecho e inferior */
     -fx-border-color: #D9D9D9; /* Color del borde */
     -fx-padding: 5; /* Relleno interno de las celdas */
-    -fx-alignment: CENTER-LEFT; /* Alineación del contenido */
+    -fx-alignment: CENTER_LEFT; /* Alineación del contenido */
 }
 
 /* Fondo suave al seleccionar */
@@ -88,6 +81,7 @@
     -fx-padding: 0;
 }
 
+/* ==================== Estilos para TextField ==================== */
 .text-field {
     -fx-background-radius: 70;
     -fx-border-radius: 70;
@@ -100,7 +94,7 @@
     -fx-padding: 10; /* Ajusta para más o menos espacio interior */
 }
 
-/* Estilo general para el HBox */
+/* ==================== Estilos para HBox ==================== */
 .hbox-container {
     -fx-background-color: white; /* Fondo claro */
     -fx-background-radius: 30px; /* Redondear las esquinas */
@@ -111,14 +105,14 @@
     -fx-alignment: center; /* Centrar los elementos dentro del HBox */
 }
 
-/* Estilo para el TextField (haciendo que sea invisible) */
+/* Estilo para el TextField dentro del HBox */
 .hbox-container .text-field {
     -fx-background-color: transparent; /* Fondo transparente */
     -fx-border-width: 0; /* Sin borde */
     -fx-pref-width: 200px; /* Ajustar el tamaño según sea necesario */
 }
 
-/* Estilo base para los botones */
+/* ==================== Estilos para Botones ==================== */
 .button {
     -fx-font-family: "Montserrat Medium"; /* Fuente Montserrat Medium */
     -fx-background-color: #F4F4F4; /* Color del fondo */
@@ -148,9 +142,10 @@
     -fx-font-family: "Montserrat Medium"; /* Fuente más destacada */
 }
 
+/* ==================== Estilos para ListView ==================== */
 .list-view {
     -fx-background-color: transparent;
-    -fx-font-family: "Consolas"; /* Cambia a Montserrat Bold */
+    -fx-font-family: "Consolas";
     -fx-font-weight: bold;
     -fx-font-size: 17px; /* Tamaño de fuente */
 }
@@ -165,35 +160,49 @@
     -fx-background-color: #ffffff; /* Blanco */
 }
 
-/* Quita el efecto de selección (opcional) */
+/* Aplicar estilos solo a la ListView principal */
 .list-cell:filled:selected, .list-cell:filled:hover {
     -fx-background-color: transparent; /* O usa otro color */
 }
 
-/* Estilo para el ComboBox */
+/* ==================== Estilos para ComboBox ==================== */
 .combo-box {
     -fx-border-color: black; /* Borde negro */
     -fx-border-width: 1px;
-    -fx-border-radius: 5px; /* Puedes ajustar el radio del borde */
+    -fx-border-radius: 5px; /* Bordes redondeados */
     -fx-background-color: #f4f4f4; /* Fondo gris claro */
-    -fx-background-radius: 5px;
+    -fx-background-radius: 5px; /* Bordes redondeados */
     -fx-font-family: 'Montserrat Bold'; /* Fuente Montserrat Bold */
     -fx-font-size: 15px; /* Tamaño de la fuente */
 }
 
-/* Estilo para las opciones desplegadas */
+/* Estilo para la flecha del ComboBox */
+.combo-box .arrow-button {
+    -fx-background-color: transparent; /* Fondo transparente */
+    -fx-border-color: transparent; /* Sin borde */
+}
+
+/* Estilo para la flecha (ícono) dentro del botón */
+.combo-box .arrow-button .arrow {
+    -fx-background-color: black; /* Color de la flecha */
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z"; /* Forma de la flecha (triángulo) */
+}
+
+/* Estilos para las opciones desplegadas del ComboBox */
 .combo-box-popup .list-view {
     -fx-background-color: white; /* Fondo blanco para las opciones */
     -fx-border-color: black; /* Borde negro para la lista desplegable */
     -fx-border-width: 1px;
+    -fx-border-radius: 5px; /* Bordes redondeados */
 }
 
-/* Estilo para los elementos individuales en la lista */
+/* Estilos para los elementos individuales en la lista del ComboBox */
 .combo-box-popup .list-cell {
     -fx-font-family: 'Montserrat Bold'; /* Fuente Montserrat Bold */
     -fx-font-size: 15px; /* Tamaño de la fuente */
     -fx-text-fill: black; /* Color del texto */
     -fx-background-color: white; /* Fondo blanco para las celdas */
+    -fx-border-radius: 5px; /* Bordes redondeados */
 }
 
 .combo-box-popup .list-cell:hover {
