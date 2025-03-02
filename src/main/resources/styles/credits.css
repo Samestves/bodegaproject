@@ -87,9 +87,21 @@
 }
 
 .toggle-button {
+    -fx-border-color: #888888; /* Color del borde en hover */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px; /* Radio del borde en hover */
     -fx-background-color: transparent;
     -fx-text-fill: #888888;
     -fx-font-size: 14px;
+}
+
+/* Efecto Hover */
+.toggle-button:hover {
+    -fx-border-color: #888888; /* Color del borde en hover */
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px; /* Radio del borde en hover */
+    -fx-text-fill: #555555; /* Color de texto más oscuro en hover */
+    -fx-background-color: rgba(136, 136, 136, 0.1); /* Fondo sutil gris claro en hover */
 }
 
 /* Detalles del cliente */

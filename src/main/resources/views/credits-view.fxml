@@ -31,7 +31,7 @@
             <StackPane styleClass="search-icon" />
          </HBox>
 
-         <Button fx:id="btnAgregarCliente" alignment="CENTER" focusTraversable="false" prefHeight="40.0" prefWidth="200.0" styleClass="add-button" text="Agregar Cliente">
+         <Button fx:id="btnAgregarCliente" alignment="CENTER" focusTraversable="false" onAction="#handleAgregarCliente" prefHeight="40.0" prefWidth="200.0" styleClass="add-button" text="Agregar Cliente">
             <graphic>
                <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
                   <image>
@@ -69,20 +69,7 @@
             <Label focusTraversable="false" styleClass="title-label" text="Lista de Clientes" />
 
             <!-- Lista de clientes -->
-            <VBox fx:id="clientesContainer" spacing="10">
-               <!-- Ejemplo de cliente expandible -->
-               <VBox styleClass="client-card">
-                  <HBox alignment="CENTER_LEFT" spacing="10">
-                     <Label focusTraversable="false" styleClass="client-name" text="Juan Pérez" />
-                     <Button fx:id="btnDesplegarJuan" focusTraversable="false" onAction="#toggleDetalleJuan" styleClass="toggle-button" text="▼" />
-                  </HBox>
-                  <!-- Panel desplegable (inicialmente oculto) -->
-                  <VBox fx:id="detalleJuan" managed="false" spacing="8" styleClass="client-details" visible="false">
-                     <Label focusTraversable="false" styleClass="detail-label" text="Deuda: $500" />
-                     <Label focusTraversable="false" styleClass="detail-label" text="Productos: Pan, Leche" />
-                     <Label focusTraversable="false" styleClass="detail-label" text="Fecha Última Compra: 2025-01-20" />
-                  </VBox>
-               </VBox>
+            <VBox fx:id="clientesContainer" focusTraversable="false" spacing="10">
                <!-- Más clientes se generan dinámicamente -->
             </VBox>
          </VBox>
